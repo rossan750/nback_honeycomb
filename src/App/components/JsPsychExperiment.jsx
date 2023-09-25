@@ -21,7 +21,20 @@ export default function JsPsychExperiment({
   const combinedOptions = {
     ...jsPsychOptions,
     display_element: experimentDivId,
-    on_data_update: (data) => dataUpdateFunction(data),
+    on_data_update: (data) => {
+      // update interaction data of last trial
+      let interactionData = jsPsych.data.getInteractionData();
+      const interactionDataOfLastTrial = interactionData
+        .filter({ trial: jsPsych.data.get().last(1).values()[0].trial_index })
+        .values();
+      if (interactionDataOfLastTrial) {
+        jsPsych.data.get().last(1).values()[0].browser_events = JSON.stringify(
+          interactionDataOfLastTrial
+        );
+      }
+      // update data from honeycomb
+      dataUpdateFunction(data);
+    },
     on_finish: (data) => dataFinishFunction(data),
   };
 
