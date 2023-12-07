@@ -132,5 +132,84 @@
       }
     },
     "welcome": "Welcome! Here are your instructions"
+  },
+  "nback": {
+    "welcomePage": {
+      "welcome": "Welcome!",
+      "clickNext": "Click on <strong>Next</strong> to continue!"
+    },
+    "instructions0back": {
+      "letter": "In this task, <strong>letters</strong> will appear on the screen consecutively.",
+      "yourTask1": "Your task will be <strong>to press the key 'J' if you see the letter <strong style='color:red'>X</strong> on the screen.</strong>",
+      "yourTask2": "Otherwise, press the <strong>key 'F'</strong>.</p>",
+      "image": "<img src='../static/images/instruction_0back_en.gif' />"
+    },
+    "instructions1back": {
+      "letter": "In this task, <strong>letters</strong> will appear on the screen consecutively.",
+      "yourTask1": "Your task will be <strong>to press the key 'J' if the letter on the screen is the same as the <strong style='color:red'>previous</strong> one</strong>.",
+      "yourTask2": "Otherwise, press the <strong>key 'F'</strong>.",
+      "image": "<img src='../static/images/instruction_1back_en.gif' />"
+    },
+    "instructions2back": {
+      "letter": "In this task, <strong>letters</strong> will appear on the screen consecutively.",
+      "yourTask1": "Your task will be <strong>to press the key 'J' if the letter on the screen is the same as <strong style='color:red'>two</strong> letters earlier</strong>.",
+      "yourTask2": "Otherwise, press the <strong>key 'F'</strong>.",
+      "image": "<img src='../static/images/instruction_2back_en.gif' />"
+    },
+    "instructions3back": {
+      "letter": "In this task, <strong>letters</strong> will appear on the screen consecutively.",
+      "yourTask1": "Your task will be <strong>to press the key 'J' if the letter on the screen is the same as <strong style='color:red'>three</strong> letters earlier</strong>.",
+      "yourTask2": "Otherwise, press the <strong>key 'F'</strong>.",
+      "image": "<img src='../static/images/instruction_3back_en.gif' />"
+    },
+    "generalInstruction": {
+      "fastAndAccurate": "Try to be as fast and as accurate as possible!",
+      "clickNext": "If the instructions are clear, click on <strong>Next</strong>"
+    },
+    "practice": {
+      "practice": "First, you can practice the task a little bit.",
+      "startPractice": "Press any key on the keyboard to start the practice!",
+      "end": "End of the practice."
+    },
+    "betweenBlocks": {
+      "rest": "Now you can rest a little.",
+      "continue": "Press any key to continue the task!",
+      "pressKey": "If you are ready, press a key!"
+    },
+    "end": {
+      "end": "End of the task.",
+      "thankYou": "Thank you!"
+    },
+    "button": {
+      "next": "Next",
+      "previous": "Previous"
+    },
+    "fullscreen": {
+      "fullscreenText": "The experiment will switch to full screen mode when you press the button below.",
+      "fullscreenButton": "Continue"
+    },
+    "feedback": {
+      "correct": "Correct!",
+      "wrong": "Wrong!",
+      "noResponse": "You did not respond!",
+      "accuracy": "You responded correctly on ",
+      "accuracy2": "% of the trials.",
+      "rt": "Your average response time was ",
+      "rt2": " ms."
+    },
+    "task": {
+      "start": "The task start now. From now on, you won't receive any feedback.",
+      "press": "Press any key to start the task!"
+    },
+    "parameters": {
+      "subject": "Subject Number:",
+      "session": "Session Number:"
+    },
+    "startWarning": {
+      "startSubject": "You are about to start the task with<strong> Subject Number ",
+      "startSession": "</strong> and <strong>Session Number ",
+      "startButton": "Start the task!",
+      "goBackButton": "Change the parameters"
+    }
   }
 }

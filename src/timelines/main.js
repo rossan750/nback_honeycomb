@@ -19,7 +19,7 @@ const jsPsychOptions = {
  */
 function buildTimeline(jsPsych) {
   // const timeline = createHoneycombTimeline(jsPsych);
-  const timeline = createNbackTimeline;
+  const timeline = createNbackTimeline(jsPsych);
 
   return timeline;
 }

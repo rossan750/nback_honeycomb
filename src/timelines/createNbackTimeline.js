@@ -6,7 +6,12 @@ Universite Claude Bernard Lyon 1
 
 Github:https://github.com/vekteo/Nback_JSPsych
 */
+import { config, language as lang } from "../config/main";
+const language = lang.nback;
 
+// To do: Copy functions into timelines/nbackblocks.js https://github.com/vekteo/Nback_jsPsych/blob/main/shared/stimuli.js https://github.com/vekteo/Nback_jsPsych/blob/main/shared/createBlocks.js
+// Edit task name from quick start https://brown-ccv.github.io/honeycomb-docs/docs/quick_start#install-dependencies
+// Create pr after running quick start
 /*************** VARIABLES ***************/
 
 export function createNbackTimeline(jsPsych) {
@@ -15,7 +20,7 @@ export function createNbackTimeline(jsPsych) {
   let timeline = [];
   const buttonToPressForTarget = ["f", "j"];
   const trialStructure = { type: "html-keyboard-response" };
-  const subjectId = jsPsych.randomization.randomID(15);
+  const { level } = config;
 
   if (level == 0) {
     instruction = language.instructions0back;
@@ -204,7 +209,6 @@ export function createNbackTimeline(jsPsych) {
     },
   };
 
-  jsPsych.data.addProperties({ subject: subjectId });
   timeline.push(
     { type: "fullscreen", fullscreen_mode: true },
     instructions,

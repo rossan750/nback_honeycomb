@@ -1,13 +1,11 @@
 {
   "fixation": {
-    "randomize_duration": true
+    "randomize_duration": false,
+    "default_duration": 500
   },
-  "honeycomb": {
-    "randomize_order": true,
-    "repetitions": 5,
-    "timeline_variables": [
-      { "stimulus": "assets/blue.png", "correct_response": "f" },
-      { "stimulus": "assets/orange.png", "correct_response": "j" }
-    ]
+  "nback": {
+    "level": 2,
+    "letter_duration": 1500,
+    "feedback_duration": 1000
   }
 }
