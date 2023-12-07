@@ -1,6 +1,7 @@
 // utilities specific to this app/task
 
 import _ from "lodash";
+import { NormSInv } from "./utils";
 
 // initialize starting conditions for each trial within a block
 export const generateStartingOpts = (blockSettings) => {

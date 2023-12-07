@@ -19,7 +19,6 @@ import {
 
 const language = lang.nback;
 
-// To do: Copy functions into timelines/nbackblocks.js https://github.com/vekteo/Nback_jsPsych/blob/main/shared/stimuli.js https://github.com/vekteo/Nback_jsPsych/blob/main/shared/createBlocks.js
 // Edit task name from quick start https://brown-ccv.github.io/honeycomb-docs/docs/quick_start#install-dependencies
 // Create pr after running quick start
 /*************** VARIABLES ***************/
