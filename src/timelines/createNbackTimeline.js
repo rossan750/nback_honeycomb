@@ -6,7 +6,17 @@ Universite Claude Bernard Lyon 1
 
 Github:https://github.com/vekteo/Nback_JSPsych
 */
-import { config, language as lang } from "../config/main";
+import { config, language as lang, taskSettings } from "../config/main";
+import {
+  setArrays,
+  defineNullBack,
+  defineOneBack,
+  defineTwoBack,
+  defineThreeBack,
+  createBlocks,
+  statCalculation,
+} from "../lib/taskUtils";
+
 const language = lang.nback;
 
 // To do: Copy functions into timelines/nbackblocks.js https://github.com/vekteo/Nback_jsPsych/blob/main/shared/stimuli.js https://github.com/vekteo/Nback_jsPsych/blob/main/shared/createBlocks.js
@@ -80,7 +90,7 @@ export function createNbackTimeline(jsPsych) {
     ...trialStructure,
     stimulus: `<div style="font-size:40px; color: green">${language.feedback.correct}</div>`,
     choices: jsPsych.NO_KEYS,
-    trial_duration: feedBackDuration,
+    trial_duration: taskSettings.nback.feedback_duration,
     data: { test_part: "feedback" },
   };
 
@@ -99,7 +109,7 @@ export function createNbackTimeline(jsPsych) {
     ...trialStructure,
     stimulus: '<div style="font-size:30px;">+</div>',
     choices: jsPsych.NO_KEYS,
-    trial_duration: fixationDuration,
+    trial_duration: taskSettings.fixation.default_duration,
     data: { test_part: "fixation" },
   };
 
@@ -108,8 +118,10 @@ export function createNbackTimeline(jsPsych) {
     stimulus: jsPsych.timelineVariable("stimulus"),
     choices: buttonToPressForTarget,
     data: jsPsych.timelineVariable("data"),
-    trial_duration: letterDuration,
-    stimulus_duration: letterDuration,
+    // trial_duration: letterDuration,
+    // stimulus_duration: letterDuration,
+    trial_duration: taskSettings.nback.letter_duration,
+    stimulus_duration: taskSettings.nback.letter_duration,
     on_finish: function (data) {
       if (data.correct_response == "f" && data.key_press == 70) {
         data.correct_rejection = 1;
@@ -205,7 +217,7 @@ export function createNbackTimeline(jsPsych) {
     },
     trial_duration: 3000,
     on_finish: function (trial) {
-      statCalculation(trial);
+      statCalculation(trial, jsPsych);
     },
   };
 

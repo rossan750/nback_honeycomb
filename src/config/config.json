@@ -1,8 +1,10 @@
 {
   "fixation": {
     "randomize_duration": false,
-    "default_duration": 500
+    "default_duration": 500,
+    "durations": [250, 500, 750, 1000, 1250, 1500, 1750, 2000]
   },
+
   "nback": {
     "level": 2,
     "letter_duration": 1500,
