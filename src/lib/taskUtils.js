@@ -494,9 +494,9 @@ export function statCalculation(trial, jsPsych) {
       trial.key_press !== null
     );
   }); //beleszámoljuk-e a hiányzó választ?????
-  let correctTrials = jsPsych.data.get().filterCustom(function (trial) {
-    return trial.hit === 1 || trial.correct_rejection === 1;
-  });
+  // let correctTrials = jsPsych.data.get().filterCustom(function (trial) {
+  //   return trial.hit === 1 || trial.correct_rejection === 1;
+  // });
 
   trial.test_part = "debrief";
   trial.STAT_nr_hit = hit.count();

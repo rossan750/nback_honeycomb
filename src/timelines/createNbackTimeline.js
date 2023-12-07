@@ -66,7 +66,9 @@ export function createNbackTimeline(jsPsych) {
   };
 
   /*create blocks*/
-
+  // TO-DO: Set nbackStimuli here, delete setArrays function
+  // TO-DO: Pass nbackStimuli to all of the other functions
+  // TO-DO: Copy createBlocks function from repo to taskUtils.js
   setArrays();
 
   if (level === 0) {
