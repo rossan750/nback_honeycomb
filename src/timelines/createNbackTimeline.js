@@ -6,6 +6,10 @@ Universite Claude Bernard Lyon 1
 
 Github:https://github.com/vekteo/Nback_JSPsych
 */
+
+//TO-DO: All trial types need to be plugins, not strings.
+//TO-DO: Stimuli list should be different variables.
+//TO-DO: Trial list should be different variables.
 import { config, language as lang, taskSettings } from "../config/main";
 import {
   defineNullBack,
@@ -17,6 +21,7 @@ import {
 } from "../lib/taskUtils";
 
 const language = lang.nback;
+console.log(language);
 
 // Edit task name from quick start https://brown-ccv.github.io/honeycomb-docs/docs/quick_start#install-dependencies
 // Create pr after running quick start
@@ -65,7 +70,6 @@ export function createNbackTimeline(jsPsych) {
   };
 
   /*create blocks*/
-  // TO-DO: Copy createBlocks function from repo to taskUtils.js
 
   // Initialize nbackStimuli
   nbackStimuli.stimuliFirstBlock = [];
@@ -83,10 +87,20 @@ export function createNbackTimeline(jsPsych) {
   } else if (level === 3) {
     nbackStimuli = defineThreeBack(nbackStimuli);
   }
-
-  createBlocks(nbackStimuli.practiceList, nbackStimuli.stimuliPractice, level);
-  createBlocks(nbackStimuli.stimuliListFirstBlock, nbackStimuli.stimuliFirstBlock, level);
-  createBlocks(nbackStimuli.stimuliListSecondBlock, nbackStimuli.stimuliSecondBlock, level);
+  // Block is added to the third parameter here. We need to return it in a way that adds the block to the correct place.
+  createBlocks(nbackStimuli, nbackStimuli.practiceList, nbackStimuli.stimuliPractice, level);
+  createBlocks(
+    nbackStimuli,
+    nbackStimuli.stimuliListFirstBlock,
+    nbackStimuli.stimuliFirstBlock,
+    level
+  );
+  createBlocks(
+    nbackStimuli,
+    nbackStimuli.stimuliListSecondBlock,
+    nbackStimuli.stimuliSecondBlock,
+    level
+  );
 
   /* define practice feedback trials */
 
@@ -224,7 +238,8 @@ export function createNbackTimeline(jsPsych) {
       statCalculation(trial, jsPsych);
     },
   };
-
+  // TO-DO: Trial types need to be plugins, not strings.
+  console.log(instructions);
   timeline.push(
     { type: "fullscreen", fullscreen_mode: true },
     instructions,

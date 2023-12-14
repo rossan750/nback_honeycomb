@@ -522,3 +522,49 @@ export function statCalculation(trial, jsPsych) {
   trial.STAT_miss_rt_median = Math.round(miss.select("rt").median());
   trial.STAT_dprime = normHit - normFa;
 }
+
+export function createBlocks(nbackStimuli, list, stimuli, level) {
+  let block, target, correctResponse, targetStimulus;
+  for (let i = 0; i < list.length; i++) {
+    if (level === 0) {
+      targetStimulus = "X";
+    } else {
+      targetStimulus = list[i - level];
+    }
+
+    if (i > 0) {
+      if (list[i] === targetStimulus) {
+        correctResponse = "j";
+        target = 1;
+      } else {
+        correctResponse = "f";
+        target = 0;
+      }
+    } else {
+      correctResponse = "f";
+      target = 0;
+    }
+    //TO-DO: Need to make sure this equality check is working.
+    if (list == nbackStimuli.practiceList) {
+      block = 0;
+    } else if (list == nbackStimuli.stimuliListFirstBlock) {
+      block = 1;
+    } else {
+      block = 2;
+    }
+
+    let newElement = {
+      stimulus: "<p class='stimulus'>" + list[i] + "</p>",
+      data: {
+        test_part: "test",
+        level: level,
+        correct_response: correctResponse,
+        block: block,
+        trial_number: i + 1,
+        target: target,
+        letter: list[i],
+      },
+    };
+    stimuli.push(newElement);
+  }
+}
