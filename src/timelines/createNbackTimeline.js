@@ -8,7 +8,6 @@ Github:https://github.com/vekteo/Nback_JSPsych
 */
 import { config, language as lang, taskSettings } from "../config/main";
 import {
-  setArrays,
   defineNullBack,
   defineOneBack,
   defineTwoBack,
@@ -66,10 +65,15 @@ export function createNbackTimeline(jsPsych) {
   };
 
   /*create blocks*/
-  // TO-DO: Set nbackStimuli here, delete setArrays function
   // TO-DO: Pass nbackStimuli to all of the other functions
   // TO-DO: Copy createBlocks function from repo to taskUtils.js
-  setArrays();
+
+  // Initialize nbackStimuli
+  nbackStimuli.stimuliFirstBlock = [];
+  nbackStimuli.stimuliSecondBlock = [];
+  nbackStimuli.stimuliPractice = [];
+  nbackStimuli.correctResponse;
+  nbackStimuli.target;
 
   if (level === 0) {
     defineNullBack();

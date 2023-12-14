@@ -15,15 +15,6 @@ export const generateStartingOpts = (blockSettings) => {
 
 // Copied functions from Nback task stimuli.js
 
-export function setArrays() {
-  nbackStimuli = {};
-  nbackStimuli.stimuliFirstBlock = [];
-  nbackStimuli.stimuliSecondBlock = [];
-  nbackStimuli.stimuliPractice = [];
-  nbackStimuli.correctResponse;
-  nbackStimuli.target;
-}
-
 export function defineNullBack() {
   nbackStimuli.practiceList = ["B", "P", "X", "K", "H", "M", "Q", "X", "N", "T"];
   nbackStimuli.stimuliListFirstBlock = [
