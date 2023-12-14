@@ -65,7 +65,6 @@ export function createNbackTimeline(jsPsych) {
   };
 
   /*create blocks*/
-  // TO-DO: Pass nbackStimuli to all of the other functions
   // TO-DO: Copy createBlocks function from repo to taskUtils.js
 
   // Initialize nbackStimuli
@@ -76,13 +75,13 @@ export function createNbackTimeline(jsPsych) {
   nbackStimuli.target;
 
   if (level === 0) {
-    defineNullBack();
+    nbackStimuli = defineNullBack(nbackStimuli);
   } else if (level === 1) {
-    defineOneBack();
+    nbackStimuli = defineOneBack(nbackStimuli);
   } else if (level === 2) {
-    defineTwoBack();
+    nbackStimuli = defineTwoBack(nbackStimuli);
   } else if (level === 3) {
-    defineThreeBack();
+    nbackStimuli = defineThreeBack(nbackStimuli);
   }
 
   createBlocks(nbackStimuli.practiceList, nbackStimuli.stimuliPractice, level);

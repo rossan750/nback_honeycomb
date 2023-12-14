@@ -15,7 +15,7 @@ export const generateStartingOpts = (blockSettings) => {
 
 // Copied functions from Nback task stimuli.js
 
-export function defineNullBack() {
+export function defineNullBack(nbackStimuli) {
   nbackStimuli.practiceList = ["B", "P", "X", "K", "H", "M", "Q", "X", "N", "T"];
   nbackStimuli.stimuliListFirstBlock = [
     "R",
@@ -121,9 +121,10 @@ export function defineNullBack() {
     "B",
     "P",
   ];
+  return nbackStimuli;
 }
 
-export function defineOneBack() {
+export function defineOneBack(nbackStimuli) {
   nbackStimuli.practiceList = ["B", "P", "K", "K", "H", "M", "Q", "Q", "X", "N"];
   nbackStimuli.stimuliListFirstBlock = [
     "H",
@@ -229,9 +230,10 @@ export function defineOneBack() {
     "T",
     "Q",
   ];
+  return nbackStimuli;
 }
 
-export function defineTwoBack() {
+export function defineTwoBack(nbackStimuli) {
   nbackStimuli.practiceList = ["B", "K", "P", "K", "H", "Q", "M", "Q", "X", "N"];
   nbackStimuli.stimuliListFirstBlock = [
     "H",
@@ -337,9 +339,10 @@ export function defineTwoBack() {
     "K",
     "N",
   ];
+  return nbackStimuli;
 }
 
-export function defineThreeBack() {
+export function defineThreeBack(nbackStimuli) {
   nbackStimuli.practiceList = ["B", "K", "P", "H", "K", "Q", "M", "X", "Q", "N"];
   nbackStimuli.stimuliListFirstBlock = [
     "N",
@@ -445,6 +448,7 @@ export function defineThreeBack() {
     "R",
     "N",
   ];
+  return nbackStimuli;
 }
 
 export function statCalculation(trial, jsPsych) {
