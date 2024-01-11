@@ -7,10 +7,9 @@ Universite Claude Bernard Lyon 1
 Github:https://github.com/vekteo/Nback_JSPsych
 */
 
-//TO-DO: All trial types need to be plugins, not strings.
 //TO-DO: Stimuli list should be different variables.
 //TO-DO: Trial list should be different variables.
-import { config, language as lang, taskSettings } from "../config/main";
+import { language as lang, taskSettings } from "../config/main";
 import htmlKeyboardResponse from "@jspsych/plugin-html-keyboard-response";
 import fullscreenPlugin from "@jspsych/plugin-fullscreen";
 import instructionsPlugin from "@jspsych/plugin-instructions";
@@ -24,7 +23,6 @@ import {
 } from "../lib/taskUtils";
 
 const language = lang.nback;
-console.log(language);
 
 // TO-DO: Edit task name from quick start https://brown-ccv.github.io/honeycomb-docs/docs/quick_start#install-dependencies
 // TO-DO: Create pr after running quick start
@@ -36,7 +34,7 @@ export function createNbackTimeline(jsPsych) {
   let timeline = [];
   const buttonToPressForTarget = ["f", "j"];
   const trialStructure = { type: htmlKeyboardResponse };
-  const { level } = config;
+  const { level } = taskSettings.nback;
 
   if (level == 0) {
     instruction = language.instructions0back;
@@ -110,7 +108,7 @@ export function createNbackTimeline(jsPsych) {
   const feedbackCorrect = {
     ...trialStructure,
     stimulus: `<div style="font-size:40px; color: green">${language.feedback.correct}</div>`,
-    choices: jsPsych.NO_KEYS,
+    choices: "NO_KEYS",
     trial_duration: taskSettings.nback.feedback_duration,
     data: { test_part: "feedback" },
   };
@@ -129,7 +127,7 @@ export function createNbackTimeline(jsPsych) {
   const fixation = {
     ...trialStructure,
     stimulus: '<div style="font-size:30px;">+</div>',
-    choices: jsPsych.NO_KEYS,
+    choices: "NO_KEYS",
     trial_duration: taskSettings.fixation.default_duration,
     data: { test_part: "fixation" },
   };
@@ -219,7 +217,7 @@ export function createNbackTimeline(jsPsych) {
 
   const debriefBlock = {
     type: htmlKeyboardResponse,
-    choices: jsPsych.NO_KEYS,
+    choices: "NO_KEYS",
     stimulus: function () {
       let trials = jsPsych.data.get().filterCustom(function (trial) {
         return (trial.block === 1 || trial.block === 2) && trial.test_part === "test";
@@ -241,8 +239,6 @@ export function createNbackTimeline(jsPsych) {
       statCalculation(trial, jsPsych);
     },
   };
-  // TO-DO: Trial types need to be plugins, not strings.
-  console.log(instructions);
   timeline.push(
     { type: fullscreenPlugin, fullscreen_mode: true },
     instructions,
