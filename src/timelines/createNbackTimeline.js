@@ -7,8 +7,6 @@ Universite Claude Bernard Lyon 1
 Github:https://github.com/vekteo/Nback_JSPsych
 */
 
-//TO-DO: Stimuli list should be different variables.
-//TO-DO: Trial list should be different variables.
 import { language as lang, taskSettings } from "../config/main";
 import htmlKeyboardResponse from "@jspsych/plugin-html-keyboard-response";
 import fullscreenPlugin from "@jspsych/plugin-fullscreen";
@@ -26,6 +24,7 @@ const language = lang.nback;
 
 // TO-DO: Edit task name from quick start https://brown-ccv.github.io/honeycomb-docs/docs/quick_start#install-dependencies
 // TO-DO: Create pr after running quick start
+// TO-DO: Make sure practice trials are running correctly
 /*************** VARIABLES ***************/
 
 export function createNbackTimeline(jsPsych) {
@@ -33,7 +32,6 @@ export function createNbackTimeline(jsPsych) {
   let instruction;
   let timeline = [];
   const buttonToPressForTarget = ["f", "j"];
-  // const trialStructure = { type: htmlKeyboardResponse };
   const { level } = taskSettings.nback;
 
   if (level == 0) {
