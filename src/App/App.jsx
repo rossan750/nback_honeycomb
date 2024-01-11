@@ -1,5 +1,4 @@
 import React from "react";
-//THIS IS A TEST.
 
 // Import css styling
 import "@fortawesome/fontawesome-free/css/all.css";
