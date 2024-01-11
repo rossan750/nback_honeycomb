@@ -33,7 +33,7 @@ export function createNbackTimeline(jsPsych) {
   let instruction;
   let timeline = [];
   const buttonToPressForTarget = ["f", "j"];
-  const trialStructure = { type: htmlKeyboardResponse };
+  // const trialStructure = { type: htmlKeyboardResponse };
   const { level } = taskSettings.nback;
 
   if (level == 0) {
@@ -57,16 +57,19 @@ export function createNbackTimeline(jsPsych) {
     button_label_previous: language.button.previous,
   };
   const betweenBlockRest = {
-    ...trialStructure,
+    type: htmlKeyboardResponse,
     stimulus: `<p>${language.betweenBlocks.rest}</p><p>${language.betweenBlocks.pressKey}</p>`,
   };
-  const ready = { ...trialStructure, stimulus: `<p>${language.betweenBlocks.continue}</p>` };
+  const ready = {
+    type: htmlKeyboardResponse,
+    stimulus: `<p>${language.betweenBlocks.continue}</p>`,
+  };
   const startPractice = {
-    ...trialStructure,
+    type: htmlKeyboardResponse,
     stimulus: `<p>${language.practice.practice}</p><p>${language.practice.startPractice}<p>`,
   };
   const afterPractice = {
-    ...trialStructure,
+    type: htmlKeyboardResponse,
     stimulus: `<h2>${language.practice.end}</h2><p>${language.task.start}</p><p>${language.task.press}<p>`,
   };
 
@@ -106,7 +109,7 @@ export function createNbackTimeline(jsPsych) {
   /* define practice feedback trials */
 
   const feedbackCorrect = {
-    ...trialStructure,
+    type: htmlKeyboardResponse,
     stimulus: `<div style="font-size:40px; color: green">${language.feedback.correct}</div>`,
     choices: "NO_KEYS",
     trial_duration: taskSettings.nback.feedback_duration,
@@ -125,7 +128,7 @@ export function createNbackTimeline(jsPsych) {
   /* define task trials */
 
   const fixation = {
-    ...trialStructure,
+    type: htmlKeyboardResponse,
     stimulus: '<div style="font-size:30px;">+</div>',
     choices: "NO_KEYS",
     trial_duration: taskSettings.fixation.default_duration,
@@ -133,7 +136,7 @@ export function createNbackTimeline(jsPsych) {
   };
 
   const test = {
-    ...trialStructure,
+    type: htmlKeyboardResponse,
     stimulus: jsPsych.timelineVariable("stimulus"),
     choices: buttonToPressForTarget,
     data: jsPsych.timelineVariable("data"),
