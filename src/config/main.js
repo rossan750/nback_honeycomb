@@ -63,28 +63,6 @@ const config = init({
   USE_FIREBASE,
 });
 
-/** Determine the task settings to be used   */
-
-// Honeycomb's default task settings
-// let taskSettings = {
-//   fixation: {
-//     durations: [250, 500, 750, 1000, 1250, 1500, 1750, 2000],
-//     default_duration: 1000,
-//     randomize_duration: false,
-//   },
-// };
-// try {
-//   taskSettings = _.merge(
-//     // Honeycomb's default task settings
-//     taskSettings,
-//     // Override default task settings with settings from the config file
-//     require("./config.json")
-//   );
-// } catch (error) {
-//   // Try will fail if require doesn't find the json file
-//   console.warn("Unable to load task settings from config.json");
-// }
-
 /** Export the settings so they can be used anywhere in the app */
 export {
   audioCodes,
