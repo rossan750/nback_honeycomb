@@ -256,22 +256,4 @@ export function createNbackTimeline(jsPsych) {
     { type: fullscreenPlugin, fullscreen_mode: false }
   );
   return timeline;
-  /*************** EXPERIMENT START AND DATA UPDATE ***************/
-
-  // jsPsych.init({
-  //   timeline: timeline,
-  //   on_data_update: function() {
-  //     let interactionData = jsPsych.data.getInteractionData()
-  //     const interactionDataOfLastTrial = interactionData.filter({'trial': jsPsych.data.get().last(1).values()[0].trial_index}).values();
-  //     if (interactionDataOfLastTrial) {
-  //         jsPsych.data.get().last(1).values()[0].browser_events = JSON.stringify(interactionDataOfLastTrial)
-  //     }
-  //   },
-  //   on_close: function() {
-  //     jsPsych.data.get().localSave("csv", `NBack_Subject_${subjectId}_${level}back_quitted_output.csv`);
-  //   },
-  //   on_finish: function() {
-  //     jsPsych.data.get().localSave("csv", `NBack_Subject_${subjectId}_${level}back_output.csv`);
-  //   }
-  // });
 }

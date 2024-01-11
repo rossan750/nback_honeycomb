@@ -18,7 +18,6 @@ const jsPsychOptions = {
  * @param {Object} jsPsych The jsPsych instance that is running the experiment
  */
 function buildTimeline(jsPsych) {
-  // const timeline = createHoneycombTimeline(jsPsych);
   const timeline = createNbackTimeline(jsPsych);
 
   return timeline;
