@@ -11,6 +11,9 @@ Github:https://github.com/vekteo/Nback_JSPsych
 //TO-DO: Stimuli list should be different variables.
 //TO-DO: Trial list should be different variables.
 import { config, language as lang, taskSettings } from "../config/main";
+import htmlKeyboardResponse from "@jspsych/plugin-html-keyboard-response";
+import fullscreenPlugin from "@jspsych/plugin-fullscreen";
+import instructionsPlugin from "@jspsych/plugin-instructions";
 import {
   defineNullBack,
   defineOneBack,
@@ -23,8 +26,8 @@ import {
 const language = lang.nback;
 console.log(language);
 
-// Edit task name from quick start https://brown-ccv.github.io/honeycomb-docs/docs/quick_start#install-dependencies
-// Create pr after running quick start
+// TO-DO: Edit task name from quick start https://brown-ccv.github.io/honeycomb-docs/docs/quick_start#install-dependencies
+// TO-DO: Create pr after running quick start
 /*************** VARIABLES ***************/
 
 export function createNbackTimeline(jsPsych) {
@@ -32,7 +35,7 @@ export function createNbackTimeline(jsPsych) {
   let instruction;
   let timeline = [];
   const buttonToPressForTarget = ["f", "j"];
-  const trialStructure = { type: "html-keyboard-response" };
+  const trialStructure = { type: htmlKeyboardResponse };
   const { level } = config;
 
   if (level == 0) {
@@ -46,7 +49,7 @@ export function createNbackTimeline(jsPsych) {
   }
 
   const instructions = {
-    type: "instructions",
+    type: instructionsPlugin,
     pages: [
       `<h1>${language.welcomePage.welcome}</h1><br><p>${language.welcomePage.clickNext}</p>`,
       `<p>${instruction.letter}</p><p>${instruction.yourTask1}</p><p>${instruction.yourTask2}</p><p>${language.generalInstruction.fastAndAccurate}</p>${instruction.image}<p>${language.generalInstruction.clickNext}</p>`,
@@ -215,7 +218,7 @@ export function createNbackTimeline(jsPsych) {
   const secondBlock = { ...firstBlock, timeline_variables: nbackStimuli.stimuliSecondBlock };
 
   const debriefBlock = {
-    type: "html-keyboard-response",
+    type: htmlKeyboardResponse,
     choices: jsPsych.NO_KEYS,
     stimulus: function () {
       let trials = jsPsych.data.get().filterCustom(function (trial) {
@@ -241,7 +244,7 @@ export function createNbackTimeline(jsPsych) {
   // TO-DO: Trial types need to be plugins, not strings.
   console.log(instructions);
   timeline.push(
-    { type: "fullscreen", fullscreen_mode: true },
+    { type: fullscreenPlugin, fullscreen_mode: true },
     instructions,
     startPractice,
     practice,
@@ -251,7 +254,7 @@ export function createNbackTimeline(jsPsych) {
     ready,
     secondBlock,
     debriefBlock,
-    { type: "fullscreen", fullscreen_mode: false }
+    { type: fullscreenPlugin, fullscreen_mode: false }
   );
   return timeline;
   /*************** EXPERIMENT START AND DATA UPDATE ***************/
