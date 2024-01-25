@@ -1,6 +1,4 @@
-import { config } from "../config/main";
-import { cameraEnd, cameraStart } from "../trials/camera";
-import { createHoneycombTimeline } from "./honeycombTimeline";
+import { createNbackTimeline } from "./createNbackTimeline";
 
 /**
  * Experiment-wide settings for jsPsych: https://www.jspsych.org/7.3/overview/experiment-options/
@@ -20,13 +18,7 @@ const jsPsychOptions = {
  * @param {Object} jsPsych The jsPsych instance that is running the experiment
  */
 function buildTimeline(jsPsych) {
-  const timeline = createHoneycombTimeline(jsPsych);
-
-  // Dynamically adds the camera trials to the experiment if config.USE_CAMERA
-  if (config.USE_CAMERA) {
-    timeline.unshift(cameraStart(jsPsych)); // Add cameraStart as the first trial
-    timeline.push(cameraEnd(5000)); // Add cameraEnd as the last trial
-  }
+  const timeline = createNbackTimeline(jsPsych);
 
   return timeline;
 }

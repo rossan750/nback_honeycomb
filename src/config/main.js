@@ -5,11 +5,11 @@
 
 import { init } from "@brown-ccv/behavioral-task-trials";
 import { initJsPsych } from "jspsych";
-import _ from "lodash";
 
 import packageInfo from "../../package.json";
 import { getProlificId } from "../lib/utils";
 import language from "./language.json";
+import taskSettings from "./config.json";
 import { eventCodes } from "./trigger";
 
 // Access package name and version so we can store these as facts with task data.
@@ -62,28 +62,6 @@ const config = init({
   USE_PROLIFIC,
   USE_FIREBASE,
 });
-
-/** Determine the task settings to be used   */
-
-// Honeycomb's default task settings
-let taskSettings = {
-  fixation: {
-    durations: [250, 500, 750, 1000, 1250, 1500, 1750, 2000],
-    default_duration: 1000,
-    randomize_duration: false,
-  },
-};
-try {
-  taskSettings = _.merge(
-    // Honeycomb's default task settings
-    taskSettings,
-    // Override default task settings with settings from the config file
-    require("./config.json")
-  );
-} catch (error) {
-  // Try will fail if require doesn't find the json file
-  console.warn("Unable to load task settings from config.json");
-}
 
 /** Export the settings so they can be used anywhere in the app */
 export {
