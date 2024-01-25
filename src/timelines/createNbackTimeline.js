@@ -22,8 +22,6 @@ import {
 
 const language = lang.nback;
 
-// TO-DO: Edit task name from quick start https://brown-ccv.github.io/honeycomb-docs/docs/quick_start#install-dependencies
-// TO-DO: Create pr after running quick start
 // TO-DO: Make sure practice trials are running correctly
 /*************** VARIABLES ***************/
 

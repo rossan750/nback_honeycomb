@@ -1,17 +1,17 @@
 {
-  "name": "honeycomb",
-  "description": "All-in-one task starter app with jsPsych + React + Electron + psiturk ",
+  "name": "nback_task",
+  "description": "nback task built on Honeycomb template ",
   "author": {
-    "name": "Brown CCV",
-    "email": "ccv-bot@brown.edu",
-    "url": "https://ccv.brown.edu"
+    "name": "Basu Lab"
+
   },
   "version": "3.2.1",
+  "honeycombVersion": "3.2.1",
   "license": "MIT",
   "private": true,
   "main": "public/electron.js",
   "homepage": ".",
-  "repository": "https://github.com/brown-ccv/honeycomb",
+  "repository": "https://github.com/rossan750/nback_honeycomb",
   "dependencies": {
     "@brown-ccv/behavioral-task-trials": "^2.0.0",
     "@fortawesome/fontawesome-free": "^6.4.2",
