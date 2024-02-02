@@ -19,6 +19,8 @@ import {
   createBlocks,
   statCalculation,
 } from "../lib/taskUtils";
+import { preamble } from "./preamble";
+import { exitFullscreen } from "../trials/fullscreen";
 
 const language = lang.nback;
 
@@ -136,8 +138,6 @@ export function createNbackTimeline(jsPsych) {
     stimulus: jsPsych.timelineVariable("stimulus"),
     choices: buttonToPressForTarget,
     data: jsPsych.timelineVariable("data"),
-    // trial_duration: letterDuration,
-    // stimulus_duration: letterDuration,
     trial_duration: taskSettings.nback.letter_duration,
     stimulus_duration: taskSettings.nback.letter_duration,
     on_finish: function (data) {
@@ -238,18 +238,19 @@ export function createNbackTimeline(jsPsych) {
       statCalculation(trial, jsPsych);
     },
   };
+  // Build the actual timeline
   timeline.push(
-    { type: fullscreenPlugin, fullscreen_mode: true },
+    preamble,
     instructions,
     startPractice,
     practice,
     afterPractice,
-    firstBlock,
-    betweenBlockRest,
-    ready,
-    secondBlock,
-    debriefBlock,
-    { type: fullscreenPlugin, fullscreen_mode: false }
+    // firstBlock,
+    // betweenBlockRest,
+    // ready,
+    // secondBlock,
+    // debriefBlock,
+    exitFullscreen
   );
   return timeline;
 }
