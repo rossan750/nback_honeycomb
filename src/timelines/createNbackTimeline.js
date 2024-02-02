@@ -10,6 +10,7 @@ Github:https://github.com/vekteo/Nback_JSPsych
 import { language as lang, taskSettings } from "../config/main";
 import htmlKeyboardResponse from "@jspsych/plugin-html-keyboard-response";
 import instructionsPlugin from "@jspsych/plugin-instructions";
+import preloadPlugin from "@jspsych/plugin-preload";
 import {
   defineNullBack,
   defineOneBack,
@@ -34,6 +35,12 @@ export function createNbackTimeline(jsPsych) {
   const buttonToPressForTarget = ["f", "j"];
   const { level } = taskSettings.nback;
 console.log('level:',level);
+
+// Trial for loading all of the images.
+const preload = {
+  type: preloadPlugin,
+  images: [],
+};
 
 // Get instructions from language file.
 let instruction;
@@ -245,6 +252,7 @@ let instruction;
   // Build the actual timeline
   timeline.push(
     preamble,
+    preload,
     instructions,
     startPractice,
     practice,
