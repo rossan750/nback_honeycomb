@@ -24,8 +24,8 @@ module.exports = {
   plugins: ["react", "prettier"],
   extends: ["eslint:recommended", "plugin:react/recommended", "prettier"],
   rules: {
+    "no-unused-vars": "warn",
     "react/prop-types": "off",
-    "prettier/prettier": "warn",
   },
   overrides: [{ files: ["*.jsx", "*.js"] }],
 };
