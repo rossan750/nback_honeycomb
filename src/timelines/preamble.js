@@ -8,6 +8,7 @@ import { showName, showWelcome } from "../trials/welcome";
 /**
  * Timeline of initial trials used for setup and instructions
  */
+// TO-DO: Do we need welcome trial?
 const timeline = [showName(), enterFullscreen, showWelcome()];
 
 // Add photodiode trials

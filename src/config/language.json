@@ -1,5 +1,5 @@
 {
-  "name": "Honeycomb Task",
+  "name": "n-back task",
   "prompts": {
     "continue": {
       "prompt": "Press any key to continue.",

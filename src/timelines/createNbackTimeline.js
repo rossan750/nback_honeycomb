@@ -9,7 +9,6 @@ Github:https://github.com/vekteo/Nback_JSPsych
 
 import { language as lang, taskSettings } from "../config/main";
 import htmlKeyboardResponse from "@jspsych/plugin-html-keyboard-response";
-import fullscreenPlugin from "@jspsych/plugin-fullscreen";
 import instructionsPlugin from "@jspsych/plugin-instructions";
 import {
   defineNullBack,
@@ -22,18 +21,22 @@ import {
 import { preamble } from "./preamble";
 import { exitFullscreen } from "../trials/fullscreen";
 
+import './style.css'
 const language = lang.nback;
 
+// TO-DO: Preload instructions images.
 // TO-DO: Make sure practice trials are running correctly
 /*************** VARIABLES ***************/
 
 export function createNbackTimeline(jsPsych) {
   let nbackStimuli = {};
-  let instruction;
   let timeline = [];
   const buttonToPressForTarget = ["f", "j"];
   const { level } = taskSettings.nback;
+console.log('level:',level);
 
+// Get instructions from language file.
+let instruction;
   if (level == 0) {
     instruction = language.instructions0back;
   } else if (level == 1) {
@@ -54,6 +57,7 @@ export function createNbackTimeline(jsPsych) {
     button_label_next: language.button.next,
     button_label_previous: language.button.previous,
   };
+
   const betweenBlockRest = {
     type: htmlKeyboardResponse,
     stimulus: `<p>${language.betweenBlocks.rest}</p><p>${language.betweenBlocks.pressKey}</p>`,

@@ -1,0 +1,35 @@
+p {
+    font-size: 1.25em;
+}
+
+img {
+    width: 30rem;
+}
+
+body {
+    background-color: light-gray
+}
+
+.stimulus {
+    font-size: 60px
+}
+
+.formDiv {
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#startDiv {
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.warning{
+    margin-top: 10%;
+}
