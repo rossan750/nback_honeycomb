@@ -26,6 +26,7 @@ module.exports = {
   rules: {
     "no-unused-vars": "warn",
     "react/prop-types": "off",
+    "prettier/prettier": "warn",
   },
   overrides: [{ files: ["*.jsx", "*.js"] }],
 };

@@ -22,7 +22,7 @@ import {
 import { preamble } from "./preamble";
 import { exitFullscreen } from "../trials/fullscreen";
 
-import './style.css'
+import "./style.css";
 const language = lang.nback;
 
 // TO-DO: Preload instructions images.
@@ -34,16 +34,21 @@ export function createNbackTimeline(jsPsych) {
   let timeline = [];
   const buttonToPressForTarget = ["f", "j"];
   const { level } = taskSettings.nback;
-console.log('level:',level);
+  console.log("level:", level);
 
-// Trial for loading all of the images.
-const preload = {
-  type: preloadPlugin,
-  images: ['/assets/instruction_0back_en.gif','/assets/instruction_1back_en.gif','/assets/instruction_2back_en.gif','/assets/instruction_3back_en.gif'],
-};
+  // Trial for loading all of the images.
+  const preload = {
+    type: preloadPlugin,
+    images: [
+      "/assets/instruction_0back_en.gif",
+      "/assets/instruction_1back_en.gif",
+      "/assets/instruction_2back_en.gif",
+      "/assets/instruction_3back_en.gif",
+    ],
+  };
 
-// Get instructions from language file.
-let instruction;
+  // Get instructions from language file.
+  let instruction;
   if (level == 0) {
     instruction = language.instructions0back;
   } else if (level == 1) {
