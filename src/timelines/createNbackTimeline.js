@@ -39,7 +39,7 @@ console.log('level:',level);
 // Trial for loading all of the images.
 const preload = {
   type: preloadPlugin,
-  images: [],
+  images: ['/assets/instruction_0back_en.gif','/assets/instruction_1back_en.gif','/assets/instruction_2back_en.gif','/assets/instruction_3back_en.gif'],
 };
 
 // Get instructions from language file.
