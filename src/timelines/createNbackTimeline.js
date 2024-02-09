@@ -25,7 +25,6 @@ import { exitFullscreen } from "../trials/fullscreen";
 import "./style.css";
 const language = lang.nback;
 
-// TO-DO: Preload instructions images.
 // TO-DO: Make sure practice trials are running correctly
 /*************** VARIABLES ***************/
 
@@ -59,6 +58,7 @@ export function createNbackTimeline(jsPsych) {
     instruction = language.instructions3back;
   }
 
+  // trial for displaying the instructions
   const instructions = {
     type: instructionsPlugin,
     pages: [
@@ -70,14 +70,14 @@ export function createNbackTimeline(jsPsych) {
     button_label_previous: language.button.previous,
   };
 
-  const betweenBlockRest = {
-    type: htmlKeyboardResponse,
-    stimulus: `<p>${language.betweenBlocks.rest}</p><p>${language.betweenBlocks.pressKey}</p>`,
-  };
-  const ready = {
-    type: htmlKeyboardResponse,
-    stimulus: `<p>${language.betweenBlocks.continue}</p>`,
-  };
+  // const betweenBlockRest = {
+  //   type: htmlKeyboardResponse,
+  //   stimulus: `<p>${language.betweenBlocks.rest}</p><p>${language.betweenBlocks.pressKey}</p>`,
+  // };
+  // const ready = {
+  //   type: htmlKeyboardResponse,
+  //   stimulus: `<p>${language.betweenBlocks.continue}</p>`,
+  // };
   const startPractice = {
     type: htmlKeyboardResponse,
     stimulus: `<p>${language.practice.practice}</p><p>${language.practice.startPractice}<p>`,
@@ -93,8 +93,11 @@ export function createNbackTimeline(jsPsych) {
   nbackStimuli.stimuliFirstBlock = [];
   nbackStimuli.stimuliSecondBlock = [];
   nbackStimuli.stimuliPractice = [];
-  nbackStimuli.correctResponse;
-  nbackStimuli.target;
+  // nbackStimuli.correctResponse;
+  // nbackStimuli.target;
+
+  // TO-DO: Move level 1,2, & 3 stimuli into stimuli.json
+  // TO-DO: Update if statements to stimuli from json file
 
   if (level === 0) {
     nbackStimuli = defineNullBack(nbackStimuli);
@@ -256,7 +259,7 @@ export function createNbackTimeline(jsPsych) {
   };
   // Build the actual timeline
   timeline.push(
-    preamble,
+    // preamble,
     preload,
     instructions,
     startPractice,
