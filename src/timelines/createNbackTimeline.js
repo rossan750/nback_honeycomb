@@ -11,7 +11,7 @@ import { language as lang, stimuli, taskSettings } from "../config/main";
 import htmlKeyboardResponse from "@jspsych/plugin-html-keyboard-response";
 import instructionsPlugin from "@jspsych/plugin-instructions";
 import preloadPlugin from "@jspsych/plugin-preload";
-import { createBlocks, statCalculation } from "../lib/taskUtils";
+import { createBlock, createBlocks, statCalculation } from "../lib/taskUtils";
 import { preamble } from "./preamble";
 import { exitFullscreen } from "../trials/fullscreen";
 
@@ -104,19 +104,24 @@ export function createNbackTimeline(jsPsych) {
     nbackStimuli = stimuli.level_three;
   }
   // Block is added to the third parameter here. We need to return it in a way that adds the block to the correct place.
-  createBlocks(nbackStimuli, nbackStimuli.practiceList, nbackStimuli.stimuliPractice, level);
-  createBlocks(
-    nbackStimuli,
-    nbackStimuli.stimuliListFirstBlock,
-    nbackStimuli.stimuliFirstBlock,
-    level
-  );
-  createBlocks(
-    nbackStimuli,
-    nbackStimuli.stimuliListSecondBlock,
-    nbackStimuli.stimuliSecondBlock,
-    level
-  );
+  // createBlocks(nbackStimuli, nbackStimuli.practiceList, nbackStimuli.stimuliPractice, level);
+  // createBlocks(
+  //   nbackStimuli,
+  //   nbackStimuli.stimuliListFirstBlock,
+  //   nbackStimuli.stimuliFirstBlock,
+  //   level
+  // );
+  // createBlocks(
+  //   nbackStimuli,
+  //   nbackStimuli.stimuliListSecondBlock,
+  //   nbackStimuli.stimuliSecondBlock,
+  //   level
+  // );
+
+  //TO-DO: Create blocks should return the block trials given the array of letters.
+  const practice_block = createBlock(level, nbackStimuli.practice);
+  // const block_one = createBlock(level, nbackStimuli.block_one);
+  // const block_two = createBlock(level, nbackStimuli.block_two);
 
   /* define practice feedback trials */
 

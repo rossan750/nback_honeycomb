@@ -86,7 +86,10 @@ export function statCalculation(trial, jsPsych) {
   trial.STAT_miss_rt_median = Math.round(miss.select("rt").median());
   trial.STAT_dprime = normHit - normFa;
 }
-
+export function createBlock(level, stimuli) {
+  console.log(level);
+  console.log(stimuli);
+}
 export function createBlocks(nbackStimuli, list, stimuli, level) {
   let block, target, correctResponse, targetStimulus;
   for (let i = 0; i < list.length; i++) {
