@@ -7,18 +7,11 @@ Universite Claude Bernard Lyon 1
 Github:https://github.com/vekteo/Nback_JSPsych
 */
 
-import { language as lang, taskSettings } from "../config/main";
+import { language as lang, stimuli, taskSettings } from "../config/main";
 import htmlKeyboardResponse from "@jspsych/plugin-html-keyboard-response";
 import instructionsPlugin from "@jspsych/plugin-instructions";
 import preloadPlugin from "@jspsych/plugin-preload";
-import {
-  defineNullBack,
-  defineOneBack,
-  defineTwoBack,
-  defineThreeBack,
-  createBlocks,
-  statCalculation,
-} from "../lib/taskUtils";
+import { createBlocks, statCalculation } from "../lib/taskUtils";
 import { preamble } from "./preamble";
 import { exitFullscreen } from "../trials/fullscreen";
 
@@ -29,7 +22,6 @@ const language = lang.nback;
 /*************** VARIABLES ***************/
 
 export function createNbackTimeline(jsPsych) {
-  let nbackStimuli = {};
   let timeline = [];
   const buttonToPressForTarget = ["f", "j"];
   const { level } = taskSettings.nback;
@@ -90,22 +82,26 @@ export function createNbackTimeline(jsPsych) {
   /*create blocks*/
 
   // Initialize nbackStimuli
-  nbackStimuli.stimuliFirstBlock = [];
-  nbackStimuli.stimuliSecondBlock = [];
-  nbackStimuli.stimuliPractice = [];
+  // nbackStimuli.stimuliFirstBlock = [];
+  // nbackStimuli.stimuliSecondBlock = [];
+  // nbackStimuli.stimuliPractice = [];
   // nbackStimuli.correctResponse;
   // nbackStimuli.target;
 
   // TO-DO: Update if statements to stimuli from json file
-
+  let nbackStimuli;
   if (level === 0) {
-    nbackStimuli = defineNullBack(nbackStimuli);
+    // nbackStimuli = defineNullBack(nbackStimuli);
+    nbackStimuli = stimuli.level_zero;
   } else if (level === 1) {
-    nbackStimuli = defineOneBack(nbackStimuli);
+    // nbackStimuli = defineOneBack(nbackStimuli);
+    nbackStimuli = stimuli.level_one;
   } else if (level === 2) {
-    nbackStimuli = defineTwoBack(nbackStimuli);
+    // nbackStimuli = defineTwoBack(nbackStimuli);
+    nbackStimuli = stimuli.level_two;
   } else if (level === 3) {
-    nbackStimuli = defineThreeBack(nbackStimuli);
+    // nbackStimuli = defineThreeBack(nbackStimuli);
+    nbackStimuli = stimuli.level_three;
   }
   // Block is added to the third parameter here. We need to return it in a way that adds the block to the correct place.
   createBlocks(nbackStimuli, nbackStimuli.practiceList, nbackStimuli.stimuliPractice, level);
