@@ -96,7 +96,6 @@ export function createNbackTimeline(jsPsych) {
   // nbackStimuli.correctResponse;
   // nbackStimuli.target;
 
-  // TO-DO: Move level 1,2, & 3 stimuli into stimuli.json
   // TO-DO: Update if statements to stimuli from json file
 
   if (level === 0) {
