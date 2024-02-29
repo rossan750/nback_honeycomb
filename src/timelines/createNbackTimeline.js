@@ -11,8 +11,9 @@ import { language as lang, stimuli, taskSettings } from "../config/main";
 import htmlKeyboardResponse from "@jspsych/plugin-html-keyboard-response";
 import instructionsPlugin from "@jspsych/plugin-instructions";
 import preloadPlugin from "@jspsych/plugin-preload";
-import { createBlock, createBlocks, statCalculation } from "../lib/taskUtils";
+import { createBlocks, statCalculation } from "../lib/taskUtils";
 import { preamble } from "./preamble";
+import { createNbackBlock } from "./createNbackBlock";
 import { exitFullscreen } from "../trials/fullscreen";
 
 import "./style.css";
@@ -23,7 +24,6 @@ const language = lang.nback;
 
 export function createNbackTimeline(jsPsych) {
   let timeline = [];
-  const buttonToPressForTarget = ["f", "j"];
   const { level } = taskSettings.nback;
   console.log("level:", level);
 
@@ -119,10 +119,10 @@ export function createNbackTimeline(jsPsych) {
   // );
 
   //TO-DO: Create blocks should return the block trials given the array of letters.
-  const practice_block = createBlock(level, nbackStimuli.practice);
-  // const block_one = createBlock(level, nbackStimuli.block_one);
-  // const block_two = createBlock(level, nbackStimuli.block_two);
-
+  const practice_block = createNbackBlock(jsPsych, level, "practice", nbackStimuli.practice);
+  // const block_one = createNbackBlock(level, "block_one", nbackStimuli.block_one);
+  // const block_two = createNbackBlock(level, "block_two", nbackStimuli.block_two);
+  console.log(practice_block);
   /* define practice feedback trials */
 
   const feedbackCorrect = {
@@ -144,94 +144,89 @@ export function createNbackTimeline(jsPsych) {
 
   /* define task trials */
 
-  const fixation = {
-    type: htmlKeyboardResponse,
-    stimulus: '<div style="font-size:30px;">+</div>',
-    choices: "NO_KEYS",
-    trial_duration: taskSettings.fixation.default_duration,
-    data: { test_part: "fixation" },
-  };
+  // const fixation = {
+  //   type: htmlKeyboardResponse,
+  //   stimulus: '<div style="font-size:30px;">+</div>',
+  //   choices: "NO_KEYS",
+  //   trial_duration: taskSettings.fixation.default_duration,
+  //   data: { test_part: "fixation" },
+  // };
 
-  const test = {
-    type: htmlKeyboardResponse,
-    stimulus: jsPsych.timelineVariable("stimulus"),
-    choices: buttonToPressForTarget,
-    data: jsPsych.timelineVariable("data"),
-    trial_duration: taskSettings.nback.letter_duration,
-    stimulus_duration: taskSettings.nback.letter_duration,
-    on_finish: function (data) {
-      if (data.correct_response == "f" && data.key_press == 70) {
-        data.correct_rejection = 1;
-      } else {
-        data.correct_rejection = 0;
-      }
-      if (data.correct_response == "j" && data.key_press == 70) {
-        data.miss = 1;
-      } else {
-        data.miss = 0;
-      }
-      if (data.correct_response == "j" && data.key_press == 74) {
-        data.hit = 1;
-      } else {
-        data.hit = 0;
-      }
-      if (data.correct_response == "f" && data.key_press == 74) {
-        data.false_alarm = 1;
-      } else {
-        data.false_alarm = 0;
-      }
-    },
-  };
+  // const test = {
+  //   type: htmlKeyboardResponse,
+  //   stimulus: jsPsych.timelineVariable("stimulus"),
+  //   choices: buttonToPressForTarget,
+  //   data: jsPsych.timelineVariable("data"),
+  //   trial_duration: taskSettings.nback.letter_duration,
+  //   stimulus_duration: taskSettings.nback.letter_duration,
+  //   on_finish: function (data) {
+  //     if (data.correct_response == "f" && data.key_press == 70) {
+  //       data.correct_rejection = 1;
+  //     } else {
+  //       data.correct_rejection = 0;
+  //     }
+  //     if (data.correct_response == "j" && data.key_press == 70) {
+  //       data.miss = 1;
+  //     } else {
+  //       data.miss = 0;
+  //     }
+  //     if (data.correct_response == "j" && data.key_press == 74) {
+  //       data.hit = 1;
+  //     } else {
+  //       data.hit = 0;
+  //     }
+  //     if (data.correct_response == "f" && data.key_press == 74) {
+  //       data.false_alarm = 1;
+  //     } else {
+  //       data.false_alarm = 0;
+  //     }
+  //   },
+  // };
 
   /* define conditional timeline elements for practice */
 
-  const feedBackC = {
-    timeline: [feedbackCorrect],
-    timeline_variables: feedbackCorrect.data,
-    conditional_function: function () {
-      let data = jsPsych.data.get().last(1).values()[0];
-      return data.hit == 1 || data.correct_rejection == 1;
-    },
-  };
+  // const feedBackC = {
+  //   timeline: [feedbackCorrect],
+  //   timeline_variables: feedbackCorrect.data,
+  //   conditional_function: function () {
+  //     let data = jsPsych.data.get().last(1).values()[0];
+  //     return data.hit == 1 || data.correct_rejection == 1;
+  //   },
+  // };
 
-  const feedBackW = {
-    timeline: [feedbackWrong],
-    timeline_variables: feedbackWrong.data,
-    conditional_function: function () {
-      let data = jsPsych.data.get().last(1).values()[0];
-      return data.hit == 0 || data.correct_rejection == 0;
-    },
-  };
+  // const feedBackW = {
+  //   timeline: [feedbackWrong],
+  //   timeline_variables: feedbackWrong.data,
+  //   conditional_function: function () {
+  //     let data = jsPsych.data.get().last(1).values()[0];
+  //     return data.hit == 0 || data.correct_rejection == 0;
+  //   },
+  // };
 
-  const feedBackN = {
-    timeline: [feedbackNo],
-    timeline_variables: feedbackNo.data,
-    conditional_function: function () {
-      let data = jsPsych.data.get().last(1).values()[0];
-      return (
-        data.hit === 0 && data.correct_rejection === 0 && data.miss === 0 && data.false_alarm === 0
-      );
-    },
-  };
+  // const feedBackN = {
+  //   timeline: [feedbackNo],
+  //   timeline_variables: feedbackNo.data,
+  //   conditional_function: function () {
+  //     let data = jsPsych.data.get().last(1).values()[0];
+  //     return (
+  //       data.hit === 0 && data.correct_rejection === 0 && data.miss === 0 && data.false_alarm === 0
+  //     );
+  //   },
+  // };
 
   /*************** TIMELINE ***************/
 
-  const timelineElementStructure = {
-    repetitions: 1,
-    randomize_order: false,
-  };
-
-  const practice = {
-    ...timelineElementStructure,
-    timeline_variables: nbackStimuli.stimuliPractice,
-    timeline: [fixation, test, feedBackN, feedBackC, feedBackW],
-  };
-  const firstBlock = {
-    ...timelineElementStructure,
-    timeline_variables: nbackStimuli.stimuliFirstBlock,
-    timeline: [fixation, test],
-  };
-  const secondBlock = { ...firstBlock, timeline_variables: nbackStimuli.stimuliSecondBlock };
+  // const practice = {
+  //   ...timelineElementStructure,
+  //   timeline_variables: nbackStimuli.stimuliPractice,
+  //   timeline: [fixation, test, feedBackN, feedBackC, feedBackW],
+  // };
+  // const firstBlock = {
+  //   ...timelineElementStructure,
+  //   timeline_variables: nbackStimuli.stimuliFirstBlock,
+  //   timeline: [fixation, test],
+  // };
+  // const secondBlock = { ...firstBlock, timeline_variables: nbackStimuli.stimuliSecondBlock };
 
   const debriefBlock = {
     type: htmlKeyboardResponse,
@@ -263,7 +258,7 @@ export function createNbackTimeline(jsPsych) {
     preload,
     instructions,
     startPractice,
-    practice,
+    practice_block,
     afterPractice,
     // firstBlock,
     // betweenBlockRest,
