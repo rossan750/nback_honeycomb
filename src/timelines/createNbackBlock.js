@@ -24,27 +24,40 @@ function build_test_trial(jsPsych) {
     trial_duration: taskSettings.nback.letter_duration,
     stimulus_duration: taskSettings.nback.letter_duration,
     on_finish: function (data) {
+      // TO-DO: Replace data.key_press with data.response
+      // TO-DO: Replace data.correct_response with data.letters_match
       console.log("test_trial_finished", data);
-      if (data.correct_response == "f" && data.key_press == 70) {
-        data.correct_rejection = 1;
-      } else {
-        data.correct_rejection = 0;
-      }
-      if (data.correct_response == "j" && data.key_press == 70) {
-        data.miss = 1;
-      } else {
-        data.miss = 0;
-      }
-      if (data.correct_response == "j" && data.key_press == 74) {
-        data.hit = 1;
-      } else {
-        data.hit = 0;
-      }
-      if (data.correct_response == "f" && data.key_press == 74) {
-        data.false_alarm = 1;
-      } else {
-        data.false_alarm = 0;
-      }
+      // FOR PRACTICE TRIAL...
+      // Press "j" on the keyboard if you see "X" and "f" on the keyboard if you see anything else.
+      if (data.response === null) data.result = "no_response";
+      else if (data.letters_match && data.response === "j") data.result = "correct_match";
+      else if (data.letters_match && data.response === "f") data.result = "missed_match";
+      else if (!data.letters_match && data.response === "j") data.result = "missed_mismatch";
+      else if (!data.letters_match && data.response === "f") data.result = "correct_mismatch";
+      else throw new Error("Invalid Response");
+      data.correct_response = data.result === "correct_match" || data.result === "correct_mismatch";
+
+      // ORIGINAL TRIAL DATA
+      // if (data.correct_response == "f" && data.key_press == 70) {
+      //   data.correct_rejection = 1;
+      // } else {
+      //   data.correct_rejection = 0;
+      // }
+      // if (data.correct_response == "j" && data.key_press == 70) {
+      //   data.miss = 1;
+      // } else {
+      //   data.miss = 0;
+      // }
+      // if (data.correct_response == "j" && data.key_press == 74) {
+      //   data.hit = 1;
+      // } else {
+      //   data.hit = 0;
+      // }
+      // if (data.correct_response == "f" && data.key_press == 74) {
+      //   data.false_alarm = 1;
+      // } else {
+      //   data.false_alarm = 0;
+      // }
     },
   };
   return test;
@@ -103,7 +116,7 @@ export function createNbackBlock(jsPsych, level, block, stimuli) {
         level: level,
         block: block,
         letter: letter,
-        lettersMatch: targetMatch,
+        letters_match: targetMatch,
       },
     });
   }

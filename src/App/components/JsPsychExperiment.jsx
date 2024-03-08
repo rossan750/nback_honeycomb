@@ -21,6 +21,7 @@ export default function JsPsychExperiment({
   const combinedOptions = {
     ...jsPsychOptions,
     display_element: experimentDivId,
+    // TO-DO: Do we need this?
     on_data_update: (data) => {
       // update interaction data of last trial
       let interactionData = jsPsych.data.getInteractionData();
