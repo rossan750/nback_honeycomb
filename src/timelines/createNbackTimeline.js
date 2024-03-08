@@ -125,22 +125,22 @@ export function createNbackTimeline(jsPsych) {
   console.log(practice_block);
   /* define practice feedback trials */
 
-  const feedbackCorrect = {
-    type: htmlKeyboardResponse,
-    stimulus: `<div style="font-size:40px; color: green">${language.feedback.correct}</div>`,
-    choices: "NO_KEYS",
-    trial_duration: taskSettings.nback.feedback_duration,
-    data: { test_part: "feedback" },
-  };
+  // const feedbackCorrect = {
+  //   type: htmlKeyboardResponse,
+  //   stimulus: `<div style="font-size:40px; color: green">${language.feedback.correct}</div>`,
+  //   choices: "NO_KEYS",
+  //   trial_duration: taskSettings.nback.feedback_duration,
+  //   data: { test_part: "feedback" },
+  // };
 
-  const feedbackWrong = {
-    ...feedbackCorrect,
-    stimulus: `<div style="font-size:40px; color: red">${language.feedback.wrong}</div>`,
-  };
-  const feedbackNo = {
-    ...feedbackCorrect,
-    stimulus: `<div style="font-size:40px; color: red">${language.feedback.noResponse}</div>`,
-  };
+  // const feedbackWrong = {
+  //   ...feedbackCorrect,
+  //   stimulus: `<div style="font-size:40px; color: red">${language.feedback.wrong}</div>`,
+  // };
+  // const feedbackNo = {
+  //   ...feedbackCorrect,
+  //   stimulus: `<div style="font-size:40px; color: red">${language.feedback.noResponse}</div>`,
+  // };
 
   /* define task trials */
 

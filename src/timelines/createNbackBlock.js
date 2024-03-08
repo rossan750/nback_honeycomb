@@ -3,10 +3,6 @@ import { p } from "../lib/markup/tags";
 import { fixationHTML } from "../lib/markup/fixation";
 import htmlKeyboardResponse from "@jspsych/plugin-html-keyboard-response";
 
-// TO-DO: Add fixation trial from Honeycomb, not this one.
-// TO-DO: Change tasksettings to be settings.
-// TO-DO: Pass jsPsych to test trial.
-
 const fixation = {
   type: htmlKeyboardResponse,
   stimulus: fixationHTML,
@@ -24,9 +20,6 @@ function build_test_trial(jsPsych) {
     trial_duration: taskSettings.nback.letter_duration,
     stimulus_duration: taskSettings.nback.letter_duration,
     on_finish: function (data) {
-      // TO-DO: Replace data.key_press with data.response
-      // TO-DO: Replace data.correct_response with data.letters_match
-      console.log("test_trial_finished", data);
       // FOR PRACTICE TRIAL...
       // Press "j" on the keyboard if you see "X" and "f" on the keyboard if you see anything else.
       if (data.response === null) data.result = "no_response";
@@ -62,6 +55,39 @@ function build_test_trial(jsPsych) {
   };
   return test;
 }
+// // const feedback = {};   const feedbackCorrect = {
+//     type: htmlKeyboardResponse,
+//     stimulus: `<div style="font-size:40px; color: green">${language.feedback.correct}</div>`,
+//     choices: "NO_KEYS",
+//     trial_duration: taskSettings.nback.feedback_duration,
+//     data: { test_part: "feedback" },
+//   };
+
+//   const feedbackWrong = {
+//     ...feedbackCorrect,
+//     stimulus: `<div style="font-size:40px; color: red">${language.feedback.wrong}</div>`,
+//   };
+//   const feedbackNo = {
+//     ...feedbackCorrect,
+//     stimulus: `<div style="font-size:40px; color: red">${language.feedback.noResponse}</div>`,
+//   };
+function build_feedback_trial(jsPsych) {
+  return {
+    type: htmlKeyboardResponse,
+    choices: "NO_KEYS",
+    trial_duration: taskSettings.nback.feedback_duration,
+    data: { test_part: "feedback" },
+    stimulus: function () {
+      // let data = jsPsych.data.get().last(1).values();
+      // console.log(data);
+      const lastTrialData = jsPsych.data.getLastTrialData();
+      console.log("last trial data", lastTrialData);
+      //TO DO: Determine if last trial was no response, correct response, or incorrect response.
+      //TO DO: Display correct feedback based on info.
+      return "<div>FEEDBACK</div>";
+    },
+  };
+}
 
 /* define conditional timeline elements for practice */
 
@@ -95,6 +121,7 @@ function build_test_trial(jsPsych) {
 // };
 
 export function createNbackBlock(jsPsych, level, block, stimuli) {
+  //Build the array of timeline variables.
   const timeline_variables = [];
   for (let i = 0; i < stimuli.length; i++) {
     const letter = stimuli[i];
@@ -120,12 +147,15 @@ export function createNbackBlock(jsPsych, level, block, stimuli) {
       },
     });
   }
+  // Build the timeline.
   const test_trial = build_test_trial(jsPsych);
+  const timeline = [fixation, test_trial];
+  if (block === "practice") timeline.push(build_feedback_trial(jsPsych));
   // return the block of trials
   return {
     repetitions: 1,
     randomize_order: false,
     timeline_variables: timeline_variables,
-    timeline: [fixation, test_trial],
+    timeline: timeline,
   };
 }
