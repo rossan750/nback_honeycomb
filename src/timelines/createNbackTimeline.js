@@ -19,7 +19,6 @@ import { exitFullscreen } from "../trials/fullscreen";
 import "./style.css";
 const language = lang.nback;
 
-// TO-DO: Make sure practice trials are running correctly
 /*************** VARIABLES ***************/
 
 export function createNbackTimeline(jsPsych) {
@@ -79,155 +78,29 @@ export function createNbackTimeline(jsPsych) {
     stimulus: `<h2>${language.practice.end}</h2><p>${language.task.start}</p><p>${language.task.press}<p>`,
   };
 
-  /*create blocks*/
+  /*create stimuli*/
 
-  // Initialize nbackStimuli
-  // nbackStimuli.stimuliFirstBlock = [];
-  // nbackStimuli.stimuliSecondBlock = [];
-  // nbackStimuli.stimuliPractice = [];
-  // nbackStimuli.correctResponse;
-  // nbackStimuli.target;
-
-  // TO-DO: Update if statements to stimuli from json file
   let nbackStimuli;
   if (level === 0) {
-    // nbackStimuli = defineNullBack(nbackStimuli);
     nbackStimuli = stimuli.level_zero;
   } else if (level === 1) {
-    // nbackStimuli = defineOneBack(nbackStimuli);
     nbackStimuli = stimuli.level_one;
   } else if (level === 2) {
-    // nbackStimuli = defineTwoBack(nbackStimuli);
     nbackStimuli = stimuli.level_two;
   } else if (level === 3) {
-    // nbackStimuli = defineThreeBack(nbackStimuli);
     nbackStimuli = stimuli.level_three;
   }
-  // Block is added to the third parameter here. We need to return it in a way that adds the block to the correct place.
-  // createBlocks(nbackStimuli, nbackStimuli.practiceList, nbackStimuli.stimuliPractice, level);
-  // createBlocks(
-  //   nbackStimuli,
-  //   nbackStimuli.stimuliListFirstBlock,
-  //   nbackStimuli.stimuliFirstBlock,
-  //   level
-  // );
-  // createBlocks(
-  //   nbackStimuli,
-  //   nbackStimuli.stimuliListSecondBlock,
-  //   nbackStimuli.stimuliSecondBlock,
-  //   level
-  // );
+
+  /*************** TIMELINE ***************/
+
+  /*create blocks*/
 
   //TO-DO: Create blocks should return the block trials given the array of letters.
   const practice_block = createNbackBlock(jsPsych, level, "practice", nbackStimuli.practice);
   // const block_one = createNbackBlock(level, "block_one", nbackStimuli.block_one);
   // const block_two = createNbackBlock(level, "block_two", nbackStimuli.block_two);
-  console.log(practice_block);
-  /* define practice feedback trials */
 
-  // const feedbackCorrect = {
-  //   type: htmlKeyboardResponse,
-  //   stimulus: `<div style="font-size:40px; color: green">${language.feedback.correct}</div>`,
-  //   choices: "NO_KEYS",
-  //   trial_duration: taskSettings.nback.feedback_duration,
-  //   data: { test_part: "feedback" },
-  // };
-
-  // const feedbackWrong = {
-  //   ...feedbackCorrect,
-  //   stimulus: `<div style="font-size:40px; color: red">${language.feedback.wrong}</div>`,
-  // };
-  // const feedbackNo = {
-  //   ...feedbackCorrect,
-  //   stimulus: `<div style="font-size:40px; color: red">${language.feedback.noResponse}</div>`,
-  // };
-
-  /* define task trials */
-
-  // const fixation = {
-  //   type: htmlKeyboardResponse,
-  //   stimulus: '<div style="font-size:30px;">+</div>',
-  //   choices: "NO_KEYS",
-  //   trial_duration: taskSettings.fixation.default_duration,
-  //   data: { test_part: "fixation" },
-  // };
-
-  // const test = {
-  //   type: htmlKeyboardResponse,
-  //   stimulus: jsPsych.timelineVariable("stimulus"),
-  //   choices: buttonToPressForTarget,
-  //   data: jsPsych.timelineVariable("data"),
-  //   trial_duration: taskSettings.nback.letter_duration,
-  //   stimulus_duration: taskSettings.nback.letter_duration,
-  //   on_finish: function (data) {
-  //     if (data.correct_response == "f" && data.key_press == 70) {
-  //       data.correct_rejection = 1;
-  //     } else {
-  //       data.correct_rejection = 0;
-  //     }
-  //     if (data.correct_response == "j" && data.key_press == 70) {
-  //       data.miss = 1;
-  //     } else {
-  //       data.miss = 0;
-  //     }
-  //     if (data.correct_response == "j" && data.key_press == 74) {
-  //       data.hit = 1;
-  //     } else {
-  //       data.hit = 0;
-  //     }
-  //     if (data.correct_response == "f" && data.key_press == 74) {
-  //       data.false_alarm = 1;
-  //     } else {
-  //       data.false_alarm = 0;
-  //     }
-  //   },
-  // };
-
-  /* define conditional timeline elements for practice */
-
-  // const feedBackC = {
-  //   timeline: [feedbackCorrect],
-  //   timeline_variables: feedbackCorrect.data,
-  //   conditional_function: function () {
-  //     let data = jsPsych.data.get().last(1).values()[0];
-  //     return data.hit == 1 || data.correct_rejection == 1;
-  //   },
-  // };
-
-  // const feedBackW = {
-  //   timeline: [feedbackWrong],
-  //   timeline_variables: feedbackWrong.data,
-  //   conditional_function: function () {
-  //     let data = jsPsych.data.get().last(1).values()[0];
-  //     return data.hit == 0 || data.correct_rejection == 0;
-  //   },
-  // };
-
-  // const feedBackN = {
-  //   timeline: [feedbackNo],
-  //   timeline_variables: feedbackNo.data,
-  //   conditional_function: function () {
-  //     let data = jsPsych.data.get().last(1).values()[0];
-  //     return (
-  //       data.hit === 0 && data.correct_rejection === 0 && data.miss === 0 && data.false_alarm === 0
-  //     );
-  //   },
-  // };
-
-  /*************** TIMELINE ***************/
-
-  // const practice = {
-  //   ...timelineElementStructure,
-  //   timeline_variables: nbackStimuli.stimuliPractice,
-  //   timeline: [fixation, test, feedBackN, feedBackC, feedBackW],
-  // };
-  // const firstBlock = {
-  //   ...timelineElementStructure,
-  //   timeline_variables: nbackStimuli.stimuliFirstBlock,
-  //   timeline: [fixation, test],
-  // };
-  // const secondBlock = { ...firstBlock, timeline_variables: nbackStimuli.stimuliSecondBlock };
-
+  // TO DO: Fix debrief block.
   const debriefBlock = {
     type: htmlKeyboardResponse,
     choices: "NO_KEYS",
@@ -252,7 +125,9 @@ export function createNbackTimeline(jsPsych) {
       statCalculation(trial, jsPsych);
     },
   };
+
   // Build the actual timeline
+
   timeline.push(
     // preamble,
     preload,
