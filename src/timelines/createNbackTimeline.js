@@ -11,10 +11,11 @@ import { language as lang, stimuli, taskSettings } from "../config/main";
 import htmlKeyboardResponse from "@jspsych/plugin-html-keyboard-response";
 import instructionsPlugin from "@jspsych/plugin-instructions";
 import preloadPlugin from "@jspsych/plugin-preload";
-import { createBlocks, statCalculation } from "../lib/taskUtils";
-import { preamble } from "./preamble";
+// import { createBlocks, statCalculation } from "../lib/taskUtils";
+// import { preamble } from "./preamble";
 import { createNbackBlock } from "./createNbackBlock";
 import { exitFullscreen } from "../trials/fullscreen";
+import { statCalculation } from "../lib/taskUtils";
 
 import "./style.css";
 const language = lang.nback;
@@ -139,7 +140,7 @@ export function createNbackTimeline(jsPsych) {
     // betweenBlockRest,
     // ready,
     // secondBlock,
-    // debriefBlock,
+    debriefBlock,
     exitFullscreen
   );
   return timeline;
