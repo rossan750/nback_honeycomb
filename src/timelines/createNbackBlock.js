@@ -2,6 +2,7 @@ import { taskSettings } from "../config/main";
 import { p } from "../lib/markup/tags";
 import { fixationHTML } from "../lib/markup/fixation";
 import htmlKeyboardResponse from "@jspsych/plugin-html-keyboard-response";
+import { language } from "../config/main";
 
 const fixation = {
   type: htmlKeyboardResponse,
@@ -55,22 +56,6 @@ function build_test_trial(jsPsych) {
   };
   return test;
 }
-// // const feedback = {};   const feedbackCorrect = {
-//     type: htmlKeyboardResponse,
-//     stimulus: `<div style="font-size:40px; color: green">${language.feedback.correct}</div>`,
-//     choices: "NO_KEYS",
-//     trial_duration: taskSettings.nback.feedback_duration,
-//     data: { test_part: "feedback" },
-//   };
-
-//   const feedbackWrong = {
-//     ...feedbackCorrect,
-//     stimulus: `<div style="font-size:40px; color: red">${language.feedback.wrong}</div>`,
-//   };
-//   const feedbackNo = {
-//     ...feedbackCorrect,
-//     stimulus: `<div style="font-size:40px; color: red">${language.feedback.noResponse}</div>`,
-//   };
 function build_feedback_trial(jsPsych) {
   return {
     type: htmlKeyboardResponse,
@@ -78,47 +63,23 @@ function build_feedback_trial(jsPsych) {
     trial_duration: taskSettings.nback.feedback_duration,
     data: { test_part: "feedback" },
     stimulus: function () {
-      // let data = jsPsych.data.get().last(1).values();
-      // console.log(data);
       const lastTrialData = jsPsych.data.getLastTrialData();
-      console.log("last trial data", lastTrialData);
-      //TO DO: Determine if last trial was no response, correct response, or incorrect response.
-      //TO DO: Display correct feedback based on info.
-      return "<div>FEEDBACK</div>";
+      const previousResult = lastTrialData.trials[0].result;
+      console.log(language.feedback);
+      if (previousResult === "no_response") {
+        // User did not respond
+        return `<div style="font-size:40px; color: red">${language.nback.feedback.noResponse}</div>`;
+      } else if (previousResult === "correct_match" || previousResult === "correct_mismatch") {
+        // User responded correct
+        return `<div style="font-size:40px; color: green">${language.nback.feedback.correct}</div>`;
+      } else if (previousResult === "missed_match" || previousResult === "missed_mismatch") {
+        // User responded incorrectly
+        return `<div style="font-size:40px; color: red">${language.nback.feedback.wrong}</div>`;
+      }
+      throw new Error("Invalid response");
     },
   };
 }
-
-/* define conditional timeline elements for practice */
-
-// const feedBackC = {
-//   timeline: [feedbackCorrect],
-//   timeline_variables: feedbackCorrect.data,
-//   conditional_function: function () {
-//     let data = jsPsych.data.get().last(1).values()[0];
-//     return data.hit == 1 || data.correct_rejection == 1;
-//   },
-// };
-
-// const feedBackW = {
-//   timeline: [feedbackWrong],
-//   timeline_variables: feedbackWrong.data,
-//   conditional_function: function () {
-//     let data = jsPsych.data.get().last(1).values()[0];
-//     return data.hit == 0 || data.correct_rejection == 0;
-//   },
-// };
-
-// const feedBackN = {
-//   timeline: [feedbackNo],
-//   timeline_variables: feedbackNo.data,
-//   conditional_function: function () {
-//     let data = jsPsych.data.get().last(1).values()[0];
-//     return (
-//       data.hit === 0 && data.correct_rejection === 0 && data.miss === 0 && data.false_alarm === 0
-//     );
-//   },
-// };
 
 export function createNbackBlock(jsPsych, level, block, stimuli) {
   //Build the array of timeline variables.
