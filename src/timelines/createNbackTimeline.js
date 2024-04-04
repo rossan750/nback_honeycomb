@@ -15,9 +15,9 @@ import preloadPlugin from "@jspsych/plugin-preload";
 // import { preamble } from "./preamble";
 import { createNbackBlock } from "./createNbackBlock";
 import { exitFullscreen } from "../trials/fullscreen";
-import { statCalculation } from "../lib/taskUtils";
 
 import "./style.css";
+import { build_debrief_trial } from "../trials/nBackTrials";
 const language = lang.nback;
 
 /*************** VARIABLES ***************/
@@ -102,32 +102,33 @@ export function createNbackTimeline(jsPsych) {
   // const block_two = createNbackBlock(level, "block_two", nbackStimuli.block_two);
 
   // TO DO: Fix debrief block.
-  const debriefBlock = {
-    type: htmlKeyboardResponse,
-    choices: "NO_KEYS",
-    stimulus: function () {
-      let trials = jsPsych.data.get().filterCustom(function (trial) {
-        return (trial.block === 1 || trial.block === 2) && trial.test_part === "test";
-      });
-      let correct_trials = trials.filterCustom(function (trial) {
-        return trial.hit === 1 || trial.correct_rejection === 1;
-      });
-      let accuracy = Math.round((correct_trials.count() / trials.count()) * 100);
-      let rt = Math.round(correct_trials.select("rt").mean());
+  // const debriefBlock = {
+  //   type: htmlKeyboardResponse,
+  //   choices: "NO_KEYS",
+  //   stimulus: function () {
+  //     let trials = jsPsych.data.get().filterCustom(function (trial) {
+  //       return (trial.block === 1 || trial.block === 2) && trial.test_part === "test";
+  //     });
+  //     let correct_trials = trials.filterCustom(function (trial) {
+  //       return trial.hit === 1 || trial.correct_rejection === 1;
+  //     });
+  //     let accuracy = Math.round((correct_trials.count() / trials.count()) * 100);
+  //     let rt = Math.round(correct_trials.select("rt").mean());
 
-      return `
-    <h2>${language.end.end}</h2>
-    <p>${language.feedback.accuracy}${accuracy}${language.feedback.accuracy2}</p>
-    <p>${language.feedback.rt}${rt}${language.feedback.rt2}</p>
-    <p>${language.end.thankYou}</p>`;
-    },
-    trial_duration: 3000,
-    on_finish: function (trial) {
-      statCalculation(trial, jsPsych);
-    },
-  };
+  //     return `
+  //   <h2>${language.end.end}</h2>
+  //   <p>${language.feedback.accuracy}${accuracy}${language.feedback.accuracy2}</p>
+  //   <p>${language.feedback.rt}${rt}${language.feedback.rt2}</p>
+  //   <p>${language.end.thankYou}</p>`;
+  //   },
+  //   trial_duration: 3000,
+  //   on_finish: function (trial) {
+  //     statCalculation(trial, jsPsych);
+  //   },
+  // };
 
   // Build the actual timeline
+  const debriefTrials = build_debrief_trial(jsPsych);
 
   timeline.push(
     // preamble,
@@ -140,7 +141,7 @@ export function createNbackTimeline(jsPsych) {
     // betweenBlockRest,
     // ready,
     // secondBlock,
-    debriefBlock,
+    debriefTrials,
     exitFullscreen
   );
   return timeline;
