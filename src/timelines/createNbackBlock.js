@@ -65,7 +65,6 @@ function build_feedback_trial(jsPsych) {
     stimulus: function () {
       const lastTrialData = jsPsych.data.getLastTrialData();
       const previousResult = lastTrialData.trials[0].result;
-      console.log(language.feedback);
       if (previousResult === "no_response") {
         // User did not respond
         return `<div style="font-size:40px; color: red">${language.nback.feedback.noResponse}</div>`;

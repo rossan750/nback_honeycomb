@@ -8,16 +8,20 @@ Github:https://github.com/vekteo/Nback_JSPsych
 */
 
 import { language as lang, stimuli, taskSettings } from "../config/main";
-import htmlKeyboardResponse from "@jspsych/plugin-html-keyboard-response";
 import instructionsPlugin from "@jspsych/plugin-instructions";
-import preloadPlugin from "@jspsych/plugin-preload";
-// import { createBlocks, statCalculation } from "../lib/taskUtils";
-// import { preamble } from "./preamble";
+import { preamble } from "./preamble";
 import { createNbackBlock } from "./createNbackBlock";
 import { exitFullscreen } from "../trials/fullscreen";
 
 import "./style.css";
-import { build_debrief_trial } from "../trials/nBackTrials";
+import {
+  build_debrief_trial,
+  preload,
+  betweenBlockRest,
+  ready,
+  startPractice,
+  afterPractice,
+} from "../trials/nBackTrials";
 const language = lang.nback;
 
 /*************** VARIABLES ***************/
@@ -27,16 +31,16 @@ export function createNbackTimeline(jsPsych) {
   const { level } = taskSettings.nback;
   console.log("level:", level);
 
-  // Trial for loading all of the images.
-  const preload = {
-    type: preloadPlugin,
-    images: [
-      "/assets/instruction_0back_en.gif",
-      "/assets/instruction_1back_en.gif",
-      "/assets/instruction_2back_en.gif",
-      "/assets/instruction_3back_en.gif",
-    ],
-  };
+  // // Trial for loading all of the images.
+  // const preload = {
+  //   type: preloadPlugin,
+  //   images: [
+  //     "/assets/instruction_0back_en.gif",
+  //     "/assets/instruction_1back_en.gif",
+  //     "/assets/instruction_2back_en.gif",
+  //     "/assets/instruction_3back_en.gif",
+  //   ],
+  // };
 
   // Get instructions from language file.
   let instruction;
@@ -70,14 +74,14 @@ export function createNbackTimeline(jsPsych) {
   //   type: htmlKeyboardResponse,
   //   stimulus: `<p>${language.betweenBlocks.continue}</p>`,
   // };
-  const startPractice = {
-    type: htmlKeyboardResponse,
-    stimulus: `<p>${language.practice.practice}</p><p>${language.practice.startPractice}<p>`,
-  };
-  const afterPractice = {
-    type: htmlKeyboardResponse,
-    stimulus: `<h2>${language.practice.end}</h2><p>${language.task.start}</p><p>${language.task.press}<p>`,
-  };
+  // const startPractice = {
+  //   type: htmlKeyboardResponse,
+  //   stimulus: `<p>${language.practice.practice}</p><p>${language.practice.startPractice}<p>`,
+  // };
+  // const afterPractice = {
+  //   type: htmlKeyboardResponse,
+  //   stimulus: `<h2>${language.practice.end}</h2><p>${language.task.start}</p><p>${language.task.press}<p>`,
+  // };
 
   /*create stimuli*/
 
@@ -96,51 +100,24 @@ export function createNbackTimeline(jsPsych) {
 
   /*create blocks*/
 
-  //TO-DO: Create blocks should return the block trials given the array of letters.
   const practice_block = createNbackBlock(jsPsych, level, "practice", nbackStimuli.practice);
-  // const block_one = createNbackBlock(level, "block_one", nbackStimuli.block_one);
-  // const block_two = createNbackBlock(level, "block_two", nbackStimuli.block_two);
-
-  // TO DO: Fix debrief block.
-  // const debriefBlock = {
-  //   type: htmlKeyboardResponse,
-  //   choices: "NO_KEYS",
-  //   stimulus: function () {
-  //     let trials = jsPsych.data.get().filterCustom(function (trial) {
-  //       return (trial.block === 1 || trial.block === 2) && trial.test_part === "test";
-  //     });
-  //     let correct_trials = trials.filterCustom(function (trial) {
-  //       return trial.hit === 1 || trial.correct_rejection === 1;
-  //     });
-  //     let accuracy = Math.round((correct_trials.count() / trials.count()) * 100);
-  //     let rt = Math.round(correct_trials.select("rt").mean());
-
-  //     return `
-  //   <h2>${language.end.end}</h2>
-  //   <p>${language.feedback.accuracy}${accuracy}${language.feedback.accuracy2}</p>
-  //   <p>${language.feedback.rt}${rt}${language.feedback.rt2}</p>
-  //   <p>${language.end.thankYou}</p>`;
-  //   },
-  //   trial_duration: 3000,
-  //   on_finish: function (trial) {
-  //     statCalculation(trial, jsPsych);
-  //   },
-  // };
+  const block_one = createNbackBlock(jsPsych, level, "block_one", nbackStimuli.block_one);
+  const block_two = createNbackBlock(jsPsych, level, "block_two", nbackStimuli.block_two);
 
   // Build the actual timeline
   const debriefTrials = build_debrief_trial(jsPsych);
 
   timeline.push(
-    // preamble,
+    preamble,
     preload,
     instructions,
     startPractice,
     practice_block,
     afterPractice,
-    // firstBlock,
-    // betweenBlockRest,
-    // ready,
-    // secondBlock,
+    block_one,
+    betweenBlockRest,
+    ready,
+    block_two,
     debriefTrials,
     exitFullscreen
   );
