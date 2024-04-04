@@ -6,7 +6,7 @@
   },
 
   "nback": {
-    "level": 2,
+    "level": 0,
     "letter_duration": 1500,
     "feedback_duration": 1000
   }
