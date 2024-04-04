@@ -31,17 +31,6 @@ export function createNbackTimeline(jsPsych) {
   const { level } = taskSettings.nback;
   console.log("level:", level);
 
-  // // Trial for loading all of the images.
-  // const preload = {
-  //   type: preloadPlugin,
-  //   images: [
-  //     "/assets/instruction_0back_en.gif",
-  //     "/assets/instruction_1back_en.gif",
-  //     "/assets/instruction_2back_en.gif",
-  //     "/assets/instruction_3back_en.gif",
-  //   ],
-  // };
-
   // Get instructions from language file.
   let instruction;
   if (level == 0) {
@@ -65,23 +54,6 @@ export function createNbackTimeline(jsPsych) {
     button_label_next: language.button.next,
     button_label_previous: language.button.previous,
   };
-
-  // const betweenBlockRest = {
-  //   type: htmlKeyboardResponse,
-  //   stimulus: `<p>${language.betweenBlocks.rest}</p><p>${language.betweenBlocks.pressKey}</p>`,
-  // };
-  // const ready = {
-  //   type: htmlKeyboardResponse,
-  //   stimulus: `<p>${language.betweenBlocks.continue}</p>`,
-  // };
-  // const startPractice = {
-  //   type: htmlKeyboardResponse,
-  //   stimulus: `<p>${language.practice.practice}</p><p>${language.practice.startPractice}<p>`,
-  // };
-  // const afterPractice = {
-  //   type: htmlKeyboardResponse,
-  //   stimulus: `<h2>${language.practice.end}</h2><p>${language.task.start}</p><p>${language.task.press}<p>`,
-  // };
 
   /*create stimuli*/
 
