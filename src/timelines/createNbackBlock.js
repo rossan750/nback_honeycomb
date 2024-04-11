@@ -1,21 +1,33 @@
-import { taskSettings } from "../config/main";
-import { p } from "../lib/markup/tags";
+import { eventCodes, taskSettings } from "../config/main";
+import { div, p } from "../lib/markup/tags";
 import { fixationHTML } from "../lib/markup/fixation";
 import htmlKeyboardResponse from "@jspsych/plugin-html-keyboard-response";
 import { language } from "../config/main";
+import { photodiodeGhostBox, photodiodeSpot } from "../lib/markup/photodiode";
 
 const fixation = {
   type: htmlKeyboardResponse,
-  stimulus: fixationHTML,
+  stimulus: fixationHTML + photodiodeGhostBox(),
   choices: "NO_KEYS",
   trial_duration: taskSettings.fixation.default_duration,
   data: { test_part: "fixation" },
+  on_load: () => {
+    // Flashes the photodiode spot when the trial first loads
+    photodiodeSpot(eventCodes.fixation);
+  },
 };
 
 function build_test_trial(jsPsych) {
   const test = {
     type: htmlKeyboardResponse,
-    stimulus: jsPsych.timelineVariable("stimulus"),
+    // stimulus: jsPsych.timelineVariable("stimulus") + photodiodeGhostBox(),
+    stimulus: () => {
+      return div(jsPsych.timelineVariable("stimulus") + photodiodeGhostBox());
+    },
+    on_load: () => {
+      // Flashes the photodiode spot when the trial first loads
+      photodiodeSpot(eventCodes.test);
+    },
     choices: ["f", "j"],
     data: jsPsych.timelineVariable("data"),
     trial_duration: taskSettings.nback.letter_duration,

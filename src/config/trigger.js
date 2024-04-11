@@ -4,8 +4,7 @@
  */
 const eventCodes = {
   fixation: 1,
-  evidence: 5,
-  show_earnings: 7,
+  test: 2,
   test_connect: 32,
   open_task: 18,
 };
