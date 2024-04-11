@@ -1,7 +1,7 @@
 import { language as lang } from "../config/main";
 import htmlKeyboardResponse from "@jspsych/plugin-html-keyboard-response";
 import preloadPlugin from "@jspsych/plugin-preload";
-// import { statCalculation } from "../lib/taskUtils";
+import { statCalculation } from "../lib/taskUtils";
 const language = lang.nback;
 
 // Trial for loading all of the images.
@@ -55,10 +55,9 @@ export function build_debrief_trial(jsPsych) {
     <p>${language.end.thankYou}</p>`;
     },
     trial_duration: 3000,
-    // on_finish: function (trial) {
-    // TO-DO: Need to fix this stat calculation.
-    //   statCalculation(trial, jsPsych);
-    // },
+    on_finish: function (trial) {
+      statCalculation(trial, jsPsych);
+    },
   };
   return debriefBlock;
 }
