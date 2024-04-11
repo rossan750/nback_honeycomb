@@ -9,7 +9,7 @@ const jsPsychOptions = {
     console.log("A trial just ended, here are the latest data:");
     console.log(data);
   },
-  default_iti: 250,
+  default_iti: 0,
 };
 
 /**

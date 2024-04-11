@@ -28,9 +28,9 @@ function photodiodeSpot(taskCode) {
 
   // Pulse the spot color from black to white
   function pulseFor(ms, callback) {
-    $(".photodiode-spot").css({ "background-color": "black" });
+    $(".photodiode-spot").css({ "background-color": "white" });
     setTimeout(() => {
-      $(".photodiode-spot").css({ "background-color": "white" });
+      $(".photodiode-spot").css({ "background-color": "black" });
       callback();
     }, ms);
   }
