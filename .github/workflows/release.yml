@@ -62,9 +62,6 @@ jobs:
         if: startsWith(matrix.os, 'ubuntu')
         run: npm run package:linux
 
-      - name: ls folder
-        run: ls -R out
-
       # Upload installers to github release
       # TODO: Can these be combined based on matrix.os???
       - name: Set package version and name
