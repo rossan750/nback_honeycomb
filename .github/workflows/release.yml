@@ -2,10 +2,9 @@ name: Release
 
 # Runs the build and package scripts when a new tagged release is publishe, created or edited
 # Note that this runs for both releases and pre-releases: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#release
-# on:
-#   release:
-#     types: [created, edited, published]
-on: pull_request
+on:
+  release:
+    types: [created, edited, published]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -23,7 +22,7 @@ jobs:
       matrix:
         setting: [home, clinic]
         os: [windows-latest, macOS-latest, ubuntu-latest]
-      fail-fast: false # A failed build will not end the other matrix jobs
+      fail-fast: true # A failed build will not end the other matrix jobs
 
     steps:
       # Set up Node
