@@ -68,6 +68,7 @@ jobs:
         run: |
           echo "name=$(cat package.json | jq -r '.name')" >> $GITHUB_OUTPUT
           echo "version=$(cat package.json | jq -r '.version')" >> $GITHUB_OUTPUT
+        shell: bash
 
       - name: ⬆ Upload installer to release - Windows
         if: startsWith(matrix.os, 'windows')
