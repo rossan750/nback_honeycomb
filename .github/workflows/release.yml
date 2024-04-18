@@ -2,9 +2,11 @@ name: Release
 
 # Runs the build and package scripts when a new tagged release is publishe, created or edited
 # Note that this runs for both releases and pre-releases: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#release
-on:
-  release:
-    types: [created, edited, published]
+# on:
+#   release:
+#     types: [created, edited, published]
+
+on: pull_request
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -61,6 +63,9 @@ jobs:
       - name: 📦 Package app installer - Linux
         if: startsWith(matrix.os, 'ubuntu')
         run: npm run package:linux
+
+      - name: ls folder
+        run: ls -r out
 
       # Upload installers to github release
       # TODO: Can these be combined based on matrix.os???
