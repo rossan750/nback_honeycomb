@@ -62,8 +62,6 @@ jobs:
         if: startsWith(matrix.os, 'ubuntu')
         run: npm run package:linux
 
-      - name: "LS DIR"
-        run: ls -R out/make
 
       # Upload installers to github release
       - name: Get package name and version
