@@ -18,6 +18,7 @@ const fixation = {
 };
 
 function build_test_trial(jsPsych) {
+  const { match_key, mismatch_key, letter_duration } = taskSettings.nback;
   const test = {
     type: htmlKeyboardResponse,
     // stimulus: jsPsych.timelineVariable("stimulus") + photodiodeGhostBox(),
@@ -28,18 +29,20 @@ function build_test_trial(jsPsych) {
       // Flashes the photodiode spot when the trial first loads
       photodiodeSpot(eventCodes.test);
     },
-    choices: ["f", "j"],
+    // choices: ["f", "j"],
+    choices: [match_key, mismatch_key],
     data: jsPsych.timelineVariable("data"),
-    trial_duration: taskSettings.nback.letter_duration,
-    stimulus_duration: taskSettings.nback.letter_duration,
+    trial_duration: letter_duration,
+    stimulus_duration: letter_duration,
     on_finish: function (data) {
       // FOR PRACTICE TRIAL...
-      // Press "j" on the keyboard if you see "X" and "f" on the keyboard if you see anything else.
+      // Press "5" on the numeric keypad if you see "X" and "0" on the numeric keypad if you see anything else.
       if (data.response === null) data.result = "no_response";
-      else if (data.letters_match && data.response === "j") data.result = "correct_match";
-      else if (data.letters_match && data.response === "f") data.result = "missed_match";
-      else if (!data.letters_match && data.response === "j") data.result = "missed_mismatch";
-      else if (!data.letters_match && data.response === "f") data.result = "correct_mismatch";
+      else if (data.letters_match && data.response === match_key) data.result = "correct_match";
+      else if (data.letters_match && data.response === mismatch_key) data.result = "missed_match";
+      else if (!data.letters_match && data.response === match_key) data.result = "missed_mismatch";
+      else if (!data.letters_match && data.response === mismatch_key)
+        data.result = "correct_mismatch";
       else throw new Error("Invalid Response");
       data.correct_response = data.result === "correct_match" || data.result === "correct_mismatch";
 
