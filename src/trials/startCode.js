@@ -15,7 +15,6 @@ function startCode() {
     on_load: () => {
       // Displays the photodiode spot and plays an audible beep when the trial first loads
       photodiodeSpot(eventCodes.open_task);
-      beep(audioCodes);
     },
   };
 }
