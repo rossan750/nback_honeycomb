@@ -1,10 +1,9 @@
 import htmlKeyboardResponse from "@jspsych/plugin-html-keyboard-response";
 
-import { audioCodes, eventCodes, language } from "../config/main";
+import { eventCodes, language } from "../config/main";
 import { photodiodeSpot, photodiodeGhostBox } from "../lib/markup/photodiode";
 import { baseStimulus } from "../lib/markup/stimuli";
 import { h1 } from "../lib/markup/tags";
-import { beep } from "../lib/utils";
 
 function startCode() {
   const startCodeMarkup = h1(language.prompts.settingUp);
