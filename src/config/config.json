@@ -9,6 +9,7 @@
     "match_key": "5",
     "mismatch_key": "0",
     "level": 0,
+    "letter_size": 120,
     "letter_duration": 3000,
     "feedback_duration": 1000
   }

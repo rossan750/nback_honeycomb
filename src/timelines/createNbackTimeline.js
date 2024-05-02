@@ -26,8 +26,6 @@ const language = lang.nback;
 
 /*************** VARIABLES ***************/
 //TO-DO: Set font size in task settings
-//TO-DO: Fix instructions to use match_key and mismatch_key
-//TO-DO: Fix instructions to load image in code
 
 export function createNbackTimeline(jsPsych) {
   let timeline = [];
@@ -51,7 +49,7 @@ export function createNbackTimeline(jsPsych) {
     type: instructionsPlugin,
     pages: [
       `<h1>${language.welcomePage.welcome}</h1><br><p>${language.welcomePage.clickNext}</p>`,
-      `<p>${instruction.letter}</p><p>${instruction.yourTask1}</p><p>${instruction.yourTask2}</p><p>${language.generalInstruction.fastAndAccurate}</p>${instruction.image}<p>${language.generalInstruction.clickNext}</p>`,
+      `<p>${instruction.letter}</p><p>${instruction.yourTask1}</p><p>${instruction.yourTask2}</p><p>${language.generalInstruction.fastAndAccurate}</p><p>${language.generalInstruction.clickNext}</p>`,
     ],
     show_clickable_nav: true,
     button_label_next: language.button.next,

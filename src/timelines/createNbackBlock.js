@@ -21,7 +21,6 @@ function build_test_trial(jsPsych) {
   const { match_key, mismatch_key, letter_duration } = taskSettings.nback;
   const test = {
     type: htmlKeyboardResponse,
-    // stimulus: jsPsych.timelineVariable("stimulus") + photodiodeGhostBox(),
     stimulus: () => {
       return div(jsPsych.timelineVariable("stimulus") + photodiodeGhostBox());
     },
@@ -112,7 +111,10 @@ export function createNbackBlock(jsPsych, level, block, stimuli) {
 
     const targetMatch = letter === targetLetter;
     timeline_variables.push({
-      stimulus: p(letter, { class: "stimulus" }),
+      stimulus: p(letter, {
+        class: "stimulus",
+        style: `font-size:${taskSettings.nback.letter_size}px`,
+      }),
       data: {
         test_part: "test",
         level: level,
