@@ -25,7 +25,6 @@ import {
 const language = lang.nback;
 
 /*************** VARIABLES ***************/
-//TO-DO: Set font size in task settings
 
 export function createNbackTimeline(jsPsych) {
   let timeline = [];
