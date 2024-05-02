@@ -140,27 +140,23 @@
     },
     "instructions0back": {
       "letter": "In this task, <strong>letters</strong> will appear on the screen consecutively.",
-      "yourTask1": "Your task will be <strong>to press the key 'J' if you see the letter <strong style='color:red'>X</strong> on the screen.</strong>",
-      "yourTask2": "Otherwise, press the <strong>key 'F'</strong>.</p>",
-      "image": "<img src='/assets/instruction_0back_en.gif' />"
+      "yourTask1": "Your task will be <strong>to press the key '5' if you see the letter <strong style='color:red'>X</strong> on the screen.</strong>",
+      "yourTask2": "Otherwise, press the <strong>key '0'</strong>.</p>"
     },
     "instructions1back": {
       "letter": "In this task, <strong>letters</strong> will appear on the screen consecutively.",
-      "yourTask1": "Your task will be <strong>to press the key 'J' if the letter on the screen is the same as the <strong style='color:red'>previous</strong> one</strong>.",
-      "yourTask2": "Otherwise, press the <strong>key 'F'</strong>.",
-      "image": "<img src='/assets/instruction_1back_en.gif' />"
+      "yourTask1": "Your task will be <strong>to press the key '5' if the letter on the screen is the same as the <strong style='color:red'>previous</strong> one</strong>.",
+      "yourTask2": "Otherwise, press the <strong>key '0'</strong>."
     },
     "instructions2back": {
       "letter": "In this task, <strong>letters</strong> will appear on the screen consecutively.",
-      "yourTask1": "Your task will be <strong>to press the key 'J' if the letter on the screen is the same as <strong style='color:red'>two</strong> letters earlier</strong>.",
-      "yourTask2": "Otherwise, press the <strong>key 'F'</strong>.",
-      "image": "<img src='/assets/instruction_2back_en.gif' />"
+      "yourTask1": "Your task will be <strong>to press the key '5' if the letter on the screen is the same as <strong style='color:red'>two</strong> letters earlier</strong>.",
+      "yourTask2": "Otherwise, press the <strong>key '0'</strong>."
     },
     "instructions3back": {
       "letter": "In this task, <strong>letters</strong> will appear on the screen consecutively.",
-      "yourTask1": "Your task will be <strong>to press the key 'J' if the letter on the screen is the same as <strong style='color:red'>three</strong> letters earlier</strong>.",
-      "yourTask2": "Otherwise, press the <strong>key 'F'</strong>.",
-      "image": "<img src='/assets/instruction_3back_en.gif' />"
+      "yourTask1": "Your task will be <strong>to press the key '5' if the letter on the screen is the same as <strong style='color:red'>three</strong> letters earlier</strong>.",
+      "yourTask2": "Otherwise, press the <strong>key '0'</strong>."
     },
     "generalInstruction": {
       "fastAndAccurate": "Try to be as fast and as accurate as possible!",

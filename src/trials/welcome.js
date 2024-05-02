@@ -1,8 +1,7 @@
-import { showMessage } from "@brown-ccv/behavioral-task-trials";
 import htmlButtonResponse from "@jspsych/plugin-html-button-response";
 import htmlKeyboardResponse from "@jspsych/plugin-html-keyboard-response";
 
-import { config, language } from "../config/main";
+import { language } from "../config/main";
 import { photodiodeGhostBox } from "../lib/markup/photodiode";
 import { baseStimulus } from "../lib/markup/stimuli";
 import { h1 } from "../lib/markup/tags";
@@ -10,15 +9,12 @@ import { h1 } from "../lib/markup/tags";
 /**
  * Task that displays the name of the experiment
  */
-// TODO: Turn into jsPsych instruction trial (config is only used for task name)
-function showName() {
-  return showMessage(config, {
-    responseType: htmlButtonResponse,
-    message: language.name,
-    responseEndsTrial: true,
-    buttons: [language.prompts.continue.button],
-  });
-}
+const nameTrial = {
+  type: htmlButtonResponse,
+  stimulus: h1(language.name),
+  responseEndsTrial: true,
+  choices: [language.prompts.continue.button],
+};
 
 /**
  * Task that displays a welcome message with the photodiode ghost box
@@ -34,4 +30,4 @@ function showWelcome() {
   };
 }
 
-export { showName, showWelcome };
+export { nameTrial, showWelcome };

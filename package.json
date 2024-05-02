@@ -1,10 +1,10 @@
 {
-  "name": "nback-task",
+  "name": "nback_task",
   "description": "nback task built on Honeycomb template ",
   "author": {
     "name": "Basu Lab"
   },
-  "version": "1.0.3",
+  "version": "1.1.0",
   "honeycombVersion": "3.2.1",
   "license": "MIT",
   "private": true,

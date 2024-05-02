@@ -2,6 +2,7 @@
 
 import _ from "lodash";
 import { NormSInv } from "./utils";
+import { taskSettings } from "../config/main";
 
 // initialize starting conditions for each trial within a block
 export const generateStartingOpts = (blockSettings) => {
@@ -100,6 +101,7 @@ export function statCalculation(trial, jsPsych) {
 }
 
 export function createBlocks(nbackStimuli, list, stimuli, level) {
+  const { match_key, mismatch_key } = taskSettings.nback;
   let block, target, correctResponse, targetStimulus;
   for (let i = 0; i < list.length; i++) {
     if (level === 0) {
@@ -110,14 +112,14 @@ export function createBlocks(nbackStimuli, list, stimuli, level) {
 
     if (i > 0) {
       if (list[i] === targetStimulus) {
-        correctResponse = "j";
+        correctResponse = match_key;
         target = 1;
       } else {
-        correctResponse = "f";
+        correctResponse = mismatch_key;
         target = 0;
       }
     } else {
-      correctResponse = "f";
+      correctResponse = mismatch_key;
       target = 0;
     }
     //TO-DO: Need to make sure this equality check is working.
