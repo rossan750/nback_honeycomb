@@ -4,7 +4,7 @@
   "author": {
     "name": "Basu Lab"
   },
-  "version": "1.1.0",
+  "version": "1.1.2",
   "honeycombVersion": "3.2.1",
   "license": "MIT",
   "private": true,
@@ -90,7 +90,7 @@
     "rebuild": "electron-rebuild",
     "package:windows": "react-scripts build && electron-forge make --arch x64 --targets @electron-forge/maker-squirrel",
     "package:linux": "react-scripts build && electron-forge make --arch x64 --targets @electron-forge/maker-deb",
-    "package:mac": "react-scripts build && electron-forge make --arch x64 --targets @electron-forge/maker-dmg"
+    "package:mac": "react-scripts build && electron-forge make --arch universal --targets @electron-forge/maker-dmg"
   },
   "browserslist": {
     "production": [
