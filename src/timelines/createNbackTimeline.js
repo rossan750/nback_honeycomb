@@ -16,7 +16,6 @@ import { exitFullscreen } from "../trials/fullscreen";
 import "./style.css";
 import {
   build_debrief_trial,
-  preload,
   betweenBlockRest,
   ready,
   startPractice,
@@ -81,7 +80,6 @@ export function createNbackTimeline(jsPsych) {
 
   timeline.push(
     preamble,
-    preload,
     instructions,
     startPractice,
     practice_block,

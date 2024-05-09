@@ -1,19 +1,7 @@
 import { language as lang } from "../config/main";
 import htmlKeyboardResponse from "@jspsych/plugin-html-keyboard-response";
-import preloadPlugin from "@jspsych/plugin-preload";
 import { statCalculation } from "../lib/taskUtils";
 const language = lang.nback;
-
-// Trial for loading all of the images.
-export const preload = {
-  type: preloadPlugin,
-  images: [
-    "/assets/instruction_0back_en.gif",
-    "/assets/instruction_1back_en.gif",
-    "/assets/instruction_2back_en.gif",
-    "/assets/instruction_3back_en.gif",
-  ],
-};
 
 export const betweenBlockRest = {
   type: htmlKeyboardResponse,
