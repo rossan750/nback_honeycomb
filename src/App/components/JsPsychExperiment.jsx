@@ -59,6 +59,7 @@ export default function JsPsychExperiment({
     // TODO: Read the JSON object from ipcMain
     // TODO: Need to pass the config.json to the buildTimeline function
     // TODO: Need to pass the config.json to addProperties
+    // TODO: Better to use invoke here
     const result = ipcRenderer.sendSync("syncConfig", studyId, participantId);
     console.log("LOADED RESULT", result);
 
