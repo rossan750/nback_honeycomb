@@ -168,6 +168,7 @@ export default function App() {
     if (loggedIn) {
       return (
         <JsPsychExperiment
+          ipcRenderer={ipcRenderer}
           studyId={studyID}
           participantId={participantID}
           taskVersion={taskVersion}

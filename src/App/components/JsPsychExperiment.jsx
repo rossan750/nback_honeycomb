@@ -6,6 +6,7 @@ import { initParticipant } from "../deployments/firebase";
 import { buildTimeline, jsPsychOptions } from "../../timelines/main";
 
 export default function JsPsychExperiment({
+  ipcRenderer,
   studyId,
   participantId,
   taskVersion,
@@ -54,6 +55,13 @@ export default function JsPsychExperiment({
     if (config.USE_FIREBASE) initParticipant(studyId, participantId, startDate);
 
     const jsPsych = initJsPsych(combinedOptions);
+
+    // TODO: Read the JSON object from ipcMain
+    // TODO: Need to pass the config.json to the buildTimeline function
+    // TODO: Need to pass the config.json to addProperties
+    const result = ipcRenderer.sendSync("syncConfig", studyId, participantId);
+    console.log("LOADED RESULT", result);
+
     // Add experiment properties into jsPsych directly
     jsPsych.data.addProperties({
       study_id: studyId,
@@ -65,6 +73,8 @@ export default function JsPsychExperiment({
   }, [studyId, participantId, taskVersion]);
 
   // Build the experiment timeline
+  // TODO: Load JSON file by studyID and participantID here
+  // TODO: Pass config into buildTimeline
   const timeline = buildTimeline(jsPsych);
 
   /**

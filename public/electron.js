@@ -206,6 +206,14 @@ const getSavePath = (studyID, participantID) => {
   }
 };
 
+const getConfigPath = (studyID, participantID) => {
+  if (studyID !== "" && participantID !== "") {
+    const desktop = app.getPath("desktop");
+    const name = app.getName();
+    return path.join(desktop, name, "CONFIG", studyID);
+  }
+};
+
 const getFullPath = (fileName) => {
   return path.join(savePath, fileName);
 };
@@ -219,6 +227,19 @@ ipc.on("syncCredentials", (event) => {
     envParticipantId: process.env.REACT_APP_PARTICIPANT_ID,
     envStudyId: process.env.REACT_APP_STUDY_ID,
   };
+});
+
+// Get task configuration from environment
+ipc.on("syncConfig", (event, studyId, participantId) => {
+  // TODO: Needs to return default config if it can't find a json file
+  // TODO: Need to read the json file itself and return it to the renderer process
+
+  const configPath = getConfigPath(studyId, participantId);
+  console.log("PATH", path, participantId + ".json");
+  const file = fs.readFileSync(path.resolve(configPath, participantId + ".json"));
+
+  console.log(file);
+  return file;
 });
 
 // listener for new data

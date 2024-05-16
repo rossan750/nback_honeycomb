@@ -1,17 +1,6 @@
 {
   "level_zero": {
-    "practice": [
-      "B",
-      "P",
-      "X",
-      "K",
-      "H",
-      "M",
-      "Q",
-      "X",
-      "N",
-      "T"
-    ],
+    "practice": ["B", "P", "X", "K", "H", "M", "Q", "X", "N", "T"],
     "block_one": [
       "R",
       "B",
@@ -118,18 +107,7 @@
     ]
   },
   "level_one": {
-    "practice": [
-      "B",
-      "P",
-      "K",
-      "K",
-      "H",
-      "M",
-      "Q",
-      "Q",
-      "X",
-      "N"
-    ],
+    "practice": ["B", "P", "K", "K", "H", "M", "Q", "Q", "X", "N"],
     "block_one": [
       "H",
       "H",
@@ -236,18 +214,7 @@
     ]
   },
   "level_two": {
-    "practice": [
-      "B",
-      "K",
-      "P",
-      "K",
-      "H",
-      "Q",
-      "M",
-      "Q",
-      "X",
-      "N"
-    ],
+    "practice": ["B", "K", "P", "K", "H", "Q", "M", "Q", "X", "N"],
     "block_one": [
       "H",
       "M",
@@ -354,18 +321,7 @@
     ]
   },
   "level_three": {
-    "practice": [
-      "B",
-      "K",
-      "P",
-      "H",
-      "K",
-      "Q",
-      "M",
-      "X",
-      "Q",
-      "N"
-    ],
+    "practice": ["B", "K", "P", "H", "K", "Q", "M", "X", "Q", "N"],
     "block_one": [
       "N",
       "K",
