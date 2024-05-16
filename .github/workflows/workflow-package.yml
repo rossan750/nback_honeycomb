@@ -97,7 +97,7 @@ jobs:
         if: startsWith(matrix.os, 'mac')
         with:
           name: ${{ format('mac-installer-{0}', github.event.inputs.setting) }}
-          path: out/make/${{ steps.package_info.outputs.package_name }}-${{ steps.package_info.outputs.package_version }}-x64.dmg
+          path: out/make/${{ steps.package_info.outputs.package_name }}-${{ steps.package_info.outputs.package_version }}-universal.dmg
       - name: ⬆ Upload installer - Linux
         uses: actions/upload-artifact@v2
         if: startsWith(matrix.os, 'ubuntu')
