@@ -202,7 +202,7 @@ const getSavePath = (studyID, participantID) => {
     const desktop = app.getPath("desktop");
     const name = app.getName();
     const date = today.toISOString().slice(0, 10);
-    return path.join(desktop, studyID, participantID, date, name);
+    return path.join(desktop, name, "DATA", studyID, participantID, date);
   }
 };
 
