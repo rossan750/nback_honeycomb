@@ -70,10 +70,11 @@ export {
   config,
   eventCodes,
   language,
-  stimuli,
+  // TODO: Remove stimuli from export
+  // stimuli,
   taskName,
   // TODO: Remove taskSettings export
-  taskSettings,
+  // taskSettings,
   taskVersion,
   turkUniqueId,
 };

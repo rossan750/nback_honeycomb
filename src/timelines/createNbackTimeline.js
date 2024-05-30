@@ -7,7 +7,7 @@ Universite Claude Bernard Lyon 1
 Github:https://github.com/vekteo/Nback_JSPsych
 */
 
-import { language as lang, stimuli, taskSettings } from "../config/main";
+import { language as lang } from "../config/main";
 import instructionsPlugin from "@jspsych/plugin-instructions";
 import { preamble } from "./preamble";
 import { createNbackBlock } from "./createNbackBlock";
@@ -32,10 +32,11 @@ const language = lang.nback;
  * @param {Object} taskConfig The configuration object use to build the timeline
  */
 export function createNbackTimeline(jsPsych, taskConfig) {
-  console.log("INSIDE createNbackTimeline", jsPsych, taskConfig);
   let timeline = [];
-  // const { level } = taskSettings.nback;
-  const { level } = taskConfig.nback;
+  const { level, stimuli } = taskConfig.nback;
+
+  // TODO: taskSettings and stimuli are still being used in other places (e.g. blocks, taskUtils, etc)
+  // TODO: Create a default taskConfig object to load if Electron fails
 
   if (level < 0 || level > 3)
     throw new Error("Invalid level. Only levels 0 through 3 have been created");
