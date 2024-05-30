@@ -19,6 +19,7 @@ export default function JsPsychExperiment({
   const experimentDiv = React.useRef(null);
 
   const [jsPsych, setJsPsych] = useState();
+  const [taskConfig, setTaskConfig] = useState();
 
   // Combine custom options imported from timelines/maine.js, with necessary Honeycomb options.
   const combinedOptions = {
@@ -48,8 +49,8 @@ export default function JsPsychExperiment({
 
       const jsPsychInternal = initJsPsych(combinedOptions);
 
-      // TODO: Need to pass the config.json to the buildTimeline function
-      const taskConfig = await ipcRenderer.invoke("syncConfig", studyId, participantId);
+      const taskConfigInternal = await ipcRenderer.invoke("syncConfig", studyId, participantId);
+      setTaskConfig(taskConfigInternal);
 
       // Add experiment properties into jsPsych directly
       jsPsychInternal.data.addProperties({
@@ -60,7 +61,6 @@ export default function JsPsychExperiment({
         taskConfig: taskConfig,
       });
 
-      // return jsPsych;
       setJsPsych(jsPsychInternal);
     }
 
@@ -68,11 +68,10 @@ export default function JsPsychExperiment({
   }, [studyId, participantId, taskVersion]);
 
   // Build the experiment timeline
-  // TODO: Load JSON file by studyID and participantID here
-  // TODO: Pass config into buildTimeline
   useEffect(() => {
-    if (jsPsych) {
-      const timeline = buildTimeline(jsPsych);
+    if (jsPsych && taskConfig) {
+      // TODO: Have Electron load a default json file if none is present (need to combine stimuli.json and config.json)
+      const timeline = buildTimeline(jsPsych, taskConfig);
       jsPsych.run(timeline);
     }
   }, [jsPsych]);

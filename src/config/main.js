@@ -72,6 +72,7 @@ export {
   language,
   stimuli,
   taskName,
+  // TODO: Remove taskSettings export
   taskSettings,
   taskVersion,
   turkUniqueId,

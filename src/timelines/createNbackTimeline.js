@@ -25,20 +25,30 @@ const language = lang.nback;
 
 /*************** VARIABLES ***************/
 
-export function createNbackTimeline(jsPsych) {
+/**
+ * Builds the experiment's timeline that jsPsych will run
+ * The instance of jsPsych passed in will include jsPsychOptions from above
+ * @param {Object} jsPsych The jsPsych instance that is running the experiment
+ * @param {Object} taskConfig The configuration object use to build the timeline
+ */
+export function createNbackTimeline(jsPsych, taskConfig) {
+  console.log("INSIDE createNbackTimeline", jsPsych, taskConfig);
   let timeline = [];
-  const { level } = taskSettings.nback;
-  console.log("level:", level);
+  // const { level } = taskSettings.nback;
+  const { level } = taskConfig.nback;
+
+  if (level < 0 || level > 3)
+    throw new Error("Invalid level. Only levels 0 through 3 have been created");
 
   // Get instructions from language file.
   let instruction;
-  if (level == 0) {
+  if (level === 0) {
     instruction = language.instructions0back;
-  } else if (level == 1) {
+  } else if (level === 1) {
     instruction = language.instructions1back;
-  } else if (level == 2) {
+  } else if (level === 2) {
     instruction = language.instructions2back;
-  } else if (level == 3) {
+  } else if (level === 3) {
     instruction = language.instructions3back;
   }
 
