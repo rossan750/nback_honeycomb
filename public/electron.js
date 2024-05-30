@@ -230,12 +230,11 @@ ipc.on("syncCredentials", (event) => {
 });
 
 // Get task configuration from environment
-ipc.on("syncConfig", (event, studyId, participantId) => {
-  // TODO: Needs to return default config if it can't find a json file
-  // TODO: Need to read the json file itself and return it to the renderer process
+ipc.handle("syncConfig", (event, studyId, participantId) => {
   const configPath = getConfigPath(studyId, participantId);
+
+  // TODO: Needs to return default config if it can't find a json file
   const config = JSON.parse(fs.readFileSync(path.resolve(configPath, participantId + ".json")));
-  console.log("MAIN", config);
   return config;
 });
 
