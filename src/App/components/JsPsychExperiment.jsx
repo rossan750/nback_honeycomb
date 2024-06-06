@@ -52,13 +52,16 @@ export default function JsPsychExperiment({
       const taskConfigInternal = await ipcRenderer.invoke("syncConfig", studyId, participantId);
       setTaskConfig(taskConfigInternal);
 
+      // For testing and debugging purposes
+      console.log({ "Task Configuration": taskConfigInternal });
+
       // Add experiment properties into jsPsych directly
       jsPsychInternal.data.addProperties({
         study_id: studyId,
         participant_id: participantId,
         start_date: startDate,
         task_version: taskVersion,
-        taskConfig: taskConfig,
+        taskConfig: taskConfigInternal,
       });
 
       setJsPsych(jsPsychInternal);

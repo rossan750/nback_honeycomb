@@ -82,9 +82,27 @@ export function createNbackTimeline(jsPsych, taskConfig) {
 
   /*create blocks*/
 
-  const practice_block = createNbackBlock(jsPsych, level, "practice", nbackStimuli.practice);
-  const block_one = createNbackBlock(jsPsych, level, "block_one", nbackStimuli.block_one);
-  const block_two = createNbackBlock(jsPsych, level, "block_two", nbackStimuli.block_two);
+  const practice_block = createNbackBlock(
+    jsPsych,
+    taskConfig,
+    level,
+    "practice",
+    nbackStimuli.practice
+  );
+  const block_one = createNbackBlock(
+    jsPsych,
+    taskConfig,
+    level,
+    "block_one",
+    nbackStimuli.block_one
+  );
+  const block_two = createNbackBlock(
+    jsPsych,
+    taskConfig,
+    level,
+    "block_two",
+    nbackStimuli.block_two
+  );
 
   // Build the actual timeline
   const debriefTrials = build_debrief_trial(jsPsych);
