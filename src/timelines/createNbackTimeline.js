@@ -110,14 +110,14 @@ export function createNbackTimeline(jsPsych, taskConfig) {
   timeline.push(
     preamble,
     instructions,
-    // startPractice,
-    // practice_block,
-    // afterPractice,
-    // block_one,
-    // betweenBlockRest,
-    // ready,
-    // block_two,
-    // debriefTrials,
+    startPractice,
+    practice_block,
+    afterPractice,
+    block_one,
+    betweenBlockRest,
+    ready,
+    block_two,
+    debriefTrials,
     exitFullscreen
   );
   return timeline;
