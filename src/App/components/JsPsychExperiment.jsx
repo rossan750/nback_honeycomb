@@ -73,7 +73,6 @@ export default function JsPsychExperiment({
   // Build the experiment timeline
   useEffect(() => {
     if (jsPsych && taskConfig) {
-      // TODO: Have Electron load a default json file if none is present (need to combine stimuli.json and config.json)
       const timeline = buildTimeline(jsPsych, taskConfig);
       jsPsych.run(timeline);
     }

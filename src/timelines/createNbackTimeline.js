@@ -35,9 +35,6 @@ export function createNbackTimeline(jsPsych, taskConfig) {
   let timeline = [];
   const { level, stimuli } = taskConfig.nback;
 
-  // TODO: taskSettings and stimuli are still being used in other places (e.g. blocks, taskUtils, etc)
-  // TODO: Create a default taskConfig object to load if Electron fails
-
   if (level < 0 || level > 3)
     throw new Error("Invalid level. Only levels 0 through 3 have been created");
 

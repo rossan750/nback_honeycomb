@@ -15,7 +15,6 @@ import Login from "./components/Login";
 // Import deployment functions
 import { addToFirebase, validateParticipant } from "./deployments/firebase";
 
-// import { config, taskSettings, taskVersion, turkUniqueId } from "../config/main";
 import { config, taskVersion, turkUniqueId } from "../config/main";
 import { getProlificId } from "../lib/utils";
 
