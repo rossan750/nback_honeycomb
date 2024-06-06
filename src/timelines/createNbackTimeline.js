@@ -7,7 +7,7 @@ Universite Claude Bernard Lyon 1
 Github:https://github.com/vekteo/Nback_JSPsych
 */
 
-import { language as lang, stimuli, taskSettings } from "../config/main";
+import { language as lang } from "../config/main";
 import instructionsPlugin from "@jspsych/plugin-instructions";
 import { preamble } from "./preamble";
 import { createNbackBlock } from "./createNbackBlock";
@@ -25,20 +25,28 @@ const language = lang.nback;
 
 /*************** VARIABLES ***************/
 
-export function createNbackTimeline(jsPsych) {
+/**
+ * Builds the experiment's timeline that jsPsych will run
+ * The instance of jsPsych passed in will include jsPsychOptions from above
+ * @param {Object} jsPsych The jsPsych instance that is running the experiment
+ * @param {Object} taskConfig The configuration object use to build the timeline
+ */
+export function createNbackTimeline(jsPsych, taskConfig) {
   let timeline = [];
-  const { level } = taskSettings.nback;
-  console.log("level:", level);
+  const { level, stimuli } = taskConfig.nback;
+
+  if (level < 0 || level > 3)
+    throw new Error("Invalid level. Only levels 0 through 3 have been created");
 
   // Get instructions from language file.
   let instruction;
-  if (level == 0) {
+  if (level === 0) {
     instruction = language.instructions0back;
-  } else if (level == 1) {
+  } else if (level === 1) {
     instruction = language.instructions1back;
-  } else if (level == 2) {
+  } else if (level === 2) {
     instruction = language.instructions2back;
-  } else if (level == 3) {
+  } else if (level === 3) {
     instruction = language.instructions3back;
   }
 
@@ -71,9 +79,27 @@ export function createNbackTimeline(jsPsych) {
 
   /*create blocks*/
 
-  const practice_block = createNbackBlock(jsPsych, level, "practice", nbackStimuli.practice);
-  const block_one = createNbackBlock(jsPsych, level, "block_one", nbackStimuli.block_one);
-  const block_two = createNbackBlock(jsPsych, level, "block_two", nbackStimuli.block_two);
+  const practice_block = createNbackBlock(
+    jsPsych,
+    taskConfig,
+    level,
+    "practice",
+    nbackStimuli.practice
+  );
+  const block_one = createNbackBlock(
+    jsPsych,
+    taskConfig,
+    level,
+    "block_one",
+    nbackStimuli.block_one
+  );
+  const block_two = createNbackBlock(
+    jsPsych,
+    taskConfig,
+    level,
+    "block_two",
+    nbackStimuli.block_two
+  );
 
   // Build the actual timeline
   const debriefTrials = build_debrief_trial(jsPsych);

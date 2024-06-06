@@ -9,9 +9,7 @@ import { initJsPsych } from "jspsych";
 import packageInfo from "../../package.json";
 import { getProlificId } from "../lib/utils";
 import language from "./language.json";
-import taskSettings from "./config.json";
 import { eventCodes } from "./trigger";
-import stimuli from "./stimuli.json";
 
 // Access package name and version so we can store these as facts with task data.
 const taskName = packageInfo.name;
@@ -65,14 +63,4 @@ const config = init({
 });
 
 /** Export the settings so they can be used anywhere in the app */
-export {
-  audioCodes,
-  config,
-  eventCodes,
-  language,
-  stimuli,
-  taskName,
-  taskSettings,
-  taskVersion,
-  turkUniqueId,
-};
+export { audioCodes, config, eventCodes, language, taskName, taskVersion, turkUniqueId };

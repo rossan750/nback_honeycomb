@@ -202,7 +202,15 @@ const getSavePath = (studyID, participantID) => {
     const desktop = app.getPath("desktop");
     const name = app.getName();
     const date = today.toISOString().slice(0, 10);
-    return path.join(desktop, studyID, participantID, date, name);
+    return path.join(desktop, name, "DATA", studyID, participantID, date);
+  }
+};
+
+const getConfigPath = (studyID, participantID) => {
+  if (studyID !== "" && participantID !== "") {
+    const desktop = app.getPath("desktop");
+    const name = app.getName();
+    return path.join(desktop, name, "CONFIG", studyID);
   }
 };
 
@@ -221,6 +229,19 @@ ipc.on("syncCredentials", (event) => {
   };
 });
 
+// Get task configuration from environment
+ipc.handle("syncConfig", (event, studyId, participantId) => {
+  let config;
+  try {
+    const configPath = getConfigPath(studyId, participantId);
+    config = JSON.parse(fs.readFileSync(path.resolve(configPath, participantId + ".json")));
+  } catch (error) {
+    log.info("Custom taskConfig file was not found:", studyId, participantId);
+    config = JSON.parse(fs.readFileSync(path.resolve(__dirname, "config/defaultTaskConfig.json")));
+  }
+  return config;
+});
+
 // listener for new data
 ipc.on("data", (event, args) => {
   // initialize file - we got a participant_id to save the data to
@@ -230,7 +251,6 @@ ipc.on("data", (event, args) => {
     studyID = args.study_id;
     preSavePath = path.resolve(dir, `pid_${participantID}_${today.getTime()}.json`);
     startTrial = args.trial_index;
-    log.warn(preSavePath);
     stream = fs.createWriteStream(preSavePath, { flags: "ax+" });
     stream.write("[");
     fileCreated = true;

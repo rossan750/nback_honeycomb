@@ -15,7 +15,7 @@ import Login from "./components/Login";
 // Import deployment functions
 import { addToFirebase, validateParticipant } from "./deployments/firebase";
 
-import { config, taskSettings, taskVersion, turkUniqueId } from "../config/main";
+import { config, taskVersion, turkUniqueId } from "../config/main";
 import { getProlificId } from "../lib/utils";
 
 /**
@@ -52,10 +52,7 @@ export default function App() {
    */
   React.useEffect(() => {
     // For testing and debugging purposes
-    console.log({
-      "Honeycomb Configuration": config,
-      "Task Settings": taskSettings,
-    });
+    console.log({ "Honeycomb Configuration": config });
 
     // If on desktop
     if (config.USE_ELECTRON) {
@@ -168,6 +165,7 @@ export default function App() {
     if (loggedIn) {
       return (
         <JsPsychExperiment
+          ipcRenderer={ipcRenderer}
           studyId={studyID}
           participantId={participantID}
           taskVersion={taskVersion}

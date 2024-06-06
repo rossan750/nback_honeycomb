@@ -16,9 +16,10 @@ const jsPsychOptions = {
  * Builds the experiment's timeline that jsPsych will run
  * The instance of jsPsych passed in will include jsPsychOptions from above
  * @param {Object} jsPsych The jsPsych instance that is running the experiment
+ * @param {Object} taskConfig The configuration object use to build the timeline
  */
-function buildTimeline(jsPsych) {
-  const timeline = createNbackTimeline(jsPsych);
+function buildTimeline(jsPsych, taskConfig) {
+  const timeline = createNbackTimeline(jsPsych, taskConfig);
 
   return timeline;
 }

@@ -2,7 +2,6 @@
 
 import _ from "lodash";
 import { NormSInv } from "./utils";
-import { taskSettings } from "../config/main";
 
 // initialize starting conditions for each trial within a block
 export const generateStartingOpts = (blockSettings) => {
@@ -98,51 +97,4 @@ export function statCalculation(trial, jsPsych) {
   trial.STAT_missed_match_rt_mean = Math.round(miss.select("rt").mean());
   trial.STAT_missed_match_rt_median = Math.round(miss.select("rt").median());
   trial.STAT_dprime = normHit - normFa;
-}
-
-export function createBlocks(nbackStimuli, list, stimuli, level) {
-  const { match_key, mismatch_key } = taskSettings.nback;
-  let block, target, correctResponse, targetStimulus;
-  for (let i = 0; i < list.length; i++) {
-    if (level === 0) {
-      targetStimulus = "X";
-    } else {
-      targetStimulus = list[i - level];
-    }
-
-    if (i > 0) {
-      if (list[i] === targetStimulus) {
-        correctResponse = match_key;
-        target = 1;
-      } else {
-        correctResponse = mismatch_key;
-        target = 0;
-      }
-    } else {
-      correctResponse = mismatch_key;
-      target = 0;
-    }
-    //TO-DO: Need to make sure this equality check is working.
-    if (list == nbackStimuli.practiceList) {
-      block = 0;
-    } else if (list == nbackStimuli.stimuliListFirstBlock) {
-      block = 1;
-    } else {
-      block = 2;
-    }
-
-    let newElement = {
-      stimulus: "<p class='stimulus'>" + list[i] + "</p>",
-      data: {
-        test_part: "test",
-        level: level,
-        correct_response: correctResponse,
-        block: block,
-        trial_number: i + 1,
-        target: target,
-        letter: list[i],
-      },
-    };
-    stimuli.push(newElement);
-  }
 }
