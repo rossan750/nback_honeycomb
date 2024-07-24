@@ -61,7 +61,7 @@ export default function JsPsychExperiment({
         participant_id: participantId,
         start_date: startDate,
         task_version: taskVersion,
-        taskConfig: taskConfigInternal,
+      //  taskConfig: taskConfigInternal,
       });
 
       setJsPsych(jsPsychInternal);
