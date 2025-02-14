@@ -1,10 +1,12 @@
 // import { eventCodes, taskSettings } from "../config/main";
-import { eventCodes } from "../config/main";
 import { div, p } from "../lib/markup/tags";
-import { fixationHTML } from "../lib/markup/fixation";
 import htmlKeyboardResponse from "@jspsych/plugin-html-keyboard-response";
-import { language } from "../config/main";
-import { photodiodeGhostBox, photodiodeSpot } from "../lib/markup/photodiode";
+import language from "../config/language.json";
+import { eventCodes } from "../config/trigger";
+import { config } from "../config/main";
+
+import { photodiodeGhostBox, pdSpotEncode } from "../lib/markup/photodiode";
+import { buildFixationTrial } from "../trials/fixation";
 
 function build_test_trial(jsPsych, taskConfig) {
   const { match_key, mismatch_key, letter_duration } = taskConfig.nback;
@@ -12,11 +14,11 @@ function build_test_trial(jsPsych, taskConfig) {
   const test = {
     type: htmlKeyboardResponse,
     stimulus: () => {
-      return div(jsPsych.timelineVariable("stimulus") + photodiodeGhostBox());
+      return div(jsPsych.timelineVariable("stimulus") + photodiodeGhostBox);
     },
-    on_load: () => {
-      // Flashes the photodiode spot when the trial first loads
-      photodiodeSpot(eventCodes.test);
+    on_load: function () {
+      // Conditionally flashes the photodiode when the trial first loads
+      if (config.USE_PHOTODIODE) pdSpotEncode(eventCodes.test);
     },
     // choices: ["f", "j"],
     choices: [match_key, mismatch_key],
@@ -117,13 +119,13 @@ export function createNbackBlock(jsPsych, taskConfig, level, block, stimuli) {
   }
 
   // Build the fixation trial
-  const fixation = build_fixation_trial(taskConfig);
+  const fixationTrial = buildFixationTrial(jsPsych);
 
   // Build the test trial
   const test_trial = build_test_trial(jsPsych, taskConfig);
 
   // Build the timeline.
-  const timeline = [fixation, test_trial];
+  const timeline = [fixationTrial, test_trial];
   if (block === "practice") timeline.push(build_feedback_trial(jsPsych, taskConfig));
 
   // return the block of trials
@@ -132,19 +134,5 @@ export function createNbackBlock(jsPsych, taskConfig, level, block, stimuli) {
     randomize_order: false,
     timeline_variables: timeline_variables,
     timeline: timeline,
-  };
-}
-
-function build_fixation_trial(taskConfig) {
-  return {
-    type: htmlKeyboardResponse,
-    stimulus: fixationHTML + photodiodeGhostBox(),
-    choices: "NO_KEYS",
-    trial_duration: taskConfig.fixation.default_duration,
-    data: { test_part: "fixation" },
-    on_load: () => {
-      // Flashes the photodiode spot when the trial first loads
-      photodiodeSpot(eventCodes.fixation);
-    },
   };
 }

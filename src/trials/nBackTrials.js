@@ -1,4 +1,5 @@
-import { language as lang } from "../config/main";
+import lang from "../config/language.json";
+
 import htmlKeyboardResponse from "@jspsych/plugin-html-keyboard-response";
 import { statCalculation } from "../lib/taskUtils";
 const language = lang.nback;

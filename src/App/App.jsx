@@ -3,20 +3,20 @@ import React from "react";
 // Import css styling
 import "@fortawesome/fontawesome-free/css/all.css";
 import "bootstrap/dist/css/bootstrap.css";
-import "jspsych/css/jspsych.css";
 import "./index.css";
-import "./App.css";
+
+// Import configurations and utilities
+import { config, SETTINGS, taskVersion, turkUniqueId } from "../config/main";
+import * as trigger from "../config/trigger";
+import { getProlificId, getSearchParam } from "../lib/utils";
+
+// Import deployment functions
+import { addToFirebase, validateParticipant } from "./deployments/firebase";
 
 // Import React components
 import Error from "./components/Error";
 import JsPsychExperiment from "./components/JsPsychExperiment";
 import Login from "./components/Login";
-
-// Import deployment functions
-import { addToFirebase, validateParticipant } from "./deployments/firebase";
-
-import { config, taskVersion, turkUniqueId } from "../config/main";
-import { getProlificId } from "../lib/utils";
 
 /**
  * The top-level React component for Honeycomb. App handles initiating the jsPsych component when the participant
@@ -33,8 +33,6 @@ export default function App() {
   // Manage error state of the app
   const [isError, setIsError] = React.useState(false);
 
-  // Manage the electron renderer
-  const [ipcRenderer, setIpcRenderer] = React.useState();
   // Manage the psiturk object
   const [psiturk, setPsiturk] = React.useState(false);
 
@@ -51,54 +49,57 @@ export default function App() {
    * And determines which methods to be using
    */
   React.useEffect(() => {
-    // For testing and debugging purposes
-    console.log({ "Honeycomb Configuration": config });
+    async function setUpHoneycomb() {
+      // For testing and debugging purposes
+      console.log({
+        "Honeycomb Configuration": config,
+        "Task Settings": SETTINGS,
+      });
 
-    // If on desktop
-    if (config.USE_ELECTRON) {
-      const { ipcRenderer } = window.require("electron");
-      setIpcRenderer(ipcRenderer);
+      // If on desktop
+      if (config.USE_ELECTRON) {
+        // TODO @brown-ccv #443 : Pass NODE_ENV here as well
+        await window.electronAPI.setConfig(config); // Pass config to Electron ipcMain
+        await window.electronAPI.setTrigger(trigger); // Pass trigger to Electron ipcMain
 
-      // TODO 279, 283: I don't think this is using the ipcRenderer from state? Is that okay?
-      ipcRenderer.send("updateEnvironmentVariables", config);
-      // Fill in login fields based on environment variables (may still be blank)
-      const credentials = ipcRenderer.sendSync("syncCredentials");
-      if (credentials.participantID) setParticipantID(credentials.participantID);
-      if (credentials.studyID) setStudyID(credentials.studyID);
+        // Fill in login fields based on environment variables (may still be blank)
+        const credentials = await window.electronAPI.getCredentials();
+        if (credentials.participantID) setParticipantID(credentials.participantID);
+        if (credentials.studyID) setStudyID(credentials.studyID);
 
-      setMethod("desktop");
-    } else {
-      // If MTURK
-      if (config.USE_MTURK) {
-        /* eslint-disable */
-        window.lodash = _.noConflict();
-        setPsiturk(new PsiTurk(turkUniqueId, "/complete"));
-        setMethod("mturk");
-        handleLogin("mturk", turkUniqueId);
-        /* eslint-enable */
-      } else if (config.USE_PROLIFIC) {
-        const pID = getProlificId();
-        if (config.USE_FIREBASE && pID) {
-          setMethod("firebase");
-          handleLogin("prolific", pID);
-        } else {
-          // Error - Prolific must be used with Firebase
-          setIsError(true);
-        }
-      } else if (config.USE_FIREBASE) {
-        // Fill in login fields based on query parameters (may still be blank)
-        const query = new URLSearchParams(window.location.search);
-        const studyId = query.get("studyID");
-        const participantId = query.get("participantID");
-        if (studyId) setStudyID(studyId);
-        if (participantId) setParticipantID(participantId);
-
-        setMethod("firebase");
+        setMethod("desktop");
       } else {
-        setMethod("default");
+        // If MTURK
+        if (config.USE_MTURK) {
+          /* eslint-disable */
+          window.lodash = _.noConflict();
+          setPsiturk(new PsiTurk(turkUniqueId, "/complete"));
+          setMethod("mturk");
+          handleLogin("mturk", turkUniqueId);
+          /* eslint-enable */
+        } else if (config.USE_PROLIFIC) {
+          const pID = getProlificId();
+          if (config.USE_FIREBASE && pID) {
+            setMethod("firebase");
+            handleLogin("prolific", pID);
+          } else {
+            // Error - Prolific must be used with Firebase
+            setIsError(true);
+          }
+        } else if (config.USE_FIREBASE) {
+          // Fill in login fields based on query parameters (may still be blank)
+          const maybeStudyID = getSearchParam("studyID");
+          const maybeParticipantID = getSearchParam("participantID");
+          if (maybeStudyID !== null) setStudyID(maybeStudyID);
+          if (maybeParticipantID !== null) setParticipantID(maybeParticipantID);
+
+          setMethod("firebase");
+        } else {
+          setMethod("default");
+        }
       }
     }
-    // eslint-disable-next-line
+    setUpHoneycomb();
   }, []);
 
   /** VALIDATION FUNCTIONS */
@@ -114,13 +115,13 @@ export default function App() {
 
   // Default to no operation
   const defaultFunction = () => {};
-  // Add trial data to Firestore
+  // Add trial data to Firestore (see src/App/deployments/firebase.js)
   const firebaseUpdateFunction = (data) => {
     addToFirebase(data);
   };
-  // Execute the 'data' callback function (see public/electron.js)
-  const desktopUpdateFunction = (data) => {
-    ipcRenderer.send("data", data);
+  // Execute the 'on_data_update' callback function (see public/electron/main.js)
+  const desktopUpdateFunction = async (data) => {
+    await window.electronAPI.on_data_update(data);
   };
   // Save the trial data to PsiTurk
   const psiturkUpdateFunction = (data) => {
@@ -131,11 +132,13 @@ export default function App() {
 
   // Save the experiment data on the desktop
   const defaultFinishFunction = (data) => {
-    data.localSave("csv", "neuro-task.csv");
+    data.localSave("csv", "task.csv");
   };
-  // Execute the 'end' callback function (see public/electron.js)
-  const desktopFinishFunction = () => {
-    ipcRenderer.send("end", "true");
+  // Do nothing
+  const firebaseFinishFunction = () => {};
+  // Execute the 'on_finish' callback function (see public/electron/main.js)
+  const desktopFinishFunction = async () => {
+    await window.electronAPI.on_finish();
   };
   // Complete the PsiTurk experiment
   const psiturkFinishFunction = () => {
@@ -165,9 +168,8 @@ export default function App() {
     if (loggedIn) {
       return (
         <JsPsychExperiment
-          ipcRenderer={ipcRenderer}
-          studyId={studyID}
-          participantId={participantID}
+          studyID={studyID}
+          participantID={participantID}
           taskVersion={taskVersion}
           dataUpdateFunction={
             {
@@ -181,7 +183,7 @@ export default function App() {
             {
               desktop: desktopFinishFunction,
               mturk: psiturkFinishFunction,
-              firebase: defaultFunction,
+              firebase: firebaseFinishFunction,
               default: defaultFinishFunction,
             }[currentMethod]
           }
@@ -190,6 +192,8 @@ export default function App() {
     } else {
       return (
         <Login
+          initialStudyID={studyID}
+          initialParticipantID={participantID}
           validationFunction={
             {
               desktop: defaultValidation,
@@ -197,8 +201,6 @@ export default function App() {
               firebase: firebaseValidation,
             }[currentMethod]
           }
-          initialStudyID={studyID}
-          initialParticipantID={participantID}
           handleLogin={handleLogin}
         />
       );
