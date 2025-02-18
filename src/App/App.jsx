@@ -4,6 +4,7 @@ import React from "react";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "bootstrap/dist/css/bootstrap.css";
 import "./index.css";
+import "./App.css";
 
 // Import configurations and utilities
 import { config, SETTINGS, taskVersion, turkUniqueId } from "../config/main";
