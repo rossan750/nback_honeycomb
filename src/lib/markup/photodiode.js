@@ -13,8 +13,10 @@ const SPOT_ID = "photodiode-spot";
  * Note the box will only be visible if USE_PHOTODIODE is true
  * Note that this trial is only available when running in Electron
  */
-export const photodiodeGhostBox = div(span("", { id: SPOT_ID }), { id: BOX_ID });
-
+export const photodiodeGhostBox = div(span("", { id: SPOT_ID, class: "photodiode-spot" }), {
+  id: BOX_ID,
+  class: `photodiode-box ${config.USE_PHOTODIODE ? "visible" : "invisible"}`,
+});
 /**
  * Conditionally flashes a spot inside the photodiodeGhostBox and sends event codes to the serial port
  *
