@@ -18,6 +18,7 @@ function build_test_trial(jsPsych, taskConfig) {
     },
     on_load: function () {
       // Conditionally flashes the photodiode when the trial first loads
+      //TODO: test does not exist, test_connect does instead
       if (config.USE_PHOTODIODE) pdSpotEncode(eventCodes.test);
     },
     // choices: ["f", "j"],
