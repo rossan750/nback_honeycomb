@@ -1,15 +1,16 @@
 import htmlKeyboardResponse from "@jspsych/plugin-html-keyboard-response";
-import { SETTINGS, config } from "../config/main";
+import { config } from "../config/main";
 import { eventCodes } from "../config/trigger";
 import { pdSpotEncode, photodiodeGhostBox } from "../lib/markup/photodiode";
 import { fixationHTML } from "../lib/markup/fixation";
 /**
  * Builds a trial with a fixation dot and optional photodiode box.
- * @param {JsPsych} jsPsych The global jsPsych object used to build the trial
+ * @param {jsPsych} jsPsych The global jsPsych object used to build the trial
+ * @param {Object} taskConfig The task configs where we will retrieve fixation settings
  * @returns {Object} A jsPsych trial object
  */
-export function buildFixationTrial(jsPsych) {
-  const fixationSettings = SETTINGS.fixation;
+export function buildFixationTrial(jsPsych, taskConfig) {
+  const fixationSettings = taskConfig.fixation;
   const fixationCode = eventCodes.fixation;
 
   return {

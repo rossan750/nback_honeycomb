@@ -120,7 +120,7 @@ export function createNbackBlock(jsPsych, taskConfig, level, block, stimuli) {
   }
 
   // Build the fixation trial
-  const fixationTrial = buildFixationTrial(jsPsych);
+  const fixationTrial = buildFixationTrial(jsPsych, taskConfig);
 
   // Build the test trial
   const test_trial = build_test_trial(jsPsych, taskConfig);

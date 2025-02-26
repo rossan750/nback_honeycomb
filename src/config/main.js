@@ -8,7 +8,6 @@ import packageInfo from "../../package.json";
 import { getProlificId } from "../lib/utils";
 
 import language from "./language.json";
-import settings from "./settings.json";
 
 // TODO @brown-ccv #363: Separate into index.js (for exporting) and env.js
 
@@ -19,9 +18,6 @@ export const taskVersion = packageInfo.version;
 // Re-export the language object
 // TODO @brown-ccv #373: Save language in Firebase
 export const LANGUAGE = language;
-// Re-export the settings object
-// TODO @brown-ccv #374: Save settings in Firebase
-export const SETTINGS = settings;
 
 /**
  *
