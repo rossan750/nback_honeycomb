@@ -7,9 +7,9 @@ Universite Claude Bernard Lyon 1
 Github:https://github.com/vekteo/Nback_JSPsych
 */
 
-import { language as lang } from "../config/main";
+import lang from "../config/language.json";
 import instructionsPlugin from "@jspsych/plugin-instructions";
-import { preamble } from "./preamble";
+import { buildStartProcedure } from "./startProcedure";
 import { createNbackBlock } from "./createNbackBlock";
 import { exitFullscreen } from "../trials/fullscreen";
 
@@ -28,7 +28,7 @@ const language = lang.nback;
 /**
  * Builds the experiment's timeline that jsPsych will run
  * The instance of jsPsych passed in will include jsPsychOptions from above
- * @param {Object} jsPsych The jsPsych instance that is running the experiment
+ * @param {JsPsych} jsPsych The jsPsych instance that is running the experiment
  * @param {Object} taskConfig The configuration object use to build the timeline
  */
 export function createNbackTimeline(jsPsych, taskConfig) {
@@ -76,6 +76,7 @@ export function createNbackTimeline(jsPsych, taskConfig) {
   }
 
   /*************** TIMELINE ***************/
+  const startProcedure = buildStartProcedure(jsPsych);
 
   /*create blocks*/
 
@@ -105,7 +106,7 @@ export function createNbackTimeline(jsPsych, taskConfig) {
   const debriefTrials = build_debrief_trial(jsPsych);
 
   timeline.push(
-    preamble,
+    startProcedure,
     instructions,
     startPractice,
     practice_block,
