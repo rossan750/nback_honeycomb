@@ -17,7 +17,7 @@ export function buildFixationTrial(jsPsych, taskConfig) {
     type: htmlKeyboardResponse,
     choices: "NO_KEYS",
     // Display the fixation dot
-    stimulus: fixationHTML,
+    stimulus: "",
     prompt: function () {
       // Conditionally display the photodiodeGhostBox
       if (config.USE_PHOTODIODE) return photodiodeGhostBox;
