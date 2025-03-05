@@ -15,30 +15,18 @@ export const generateStartingOpts = (blockSettings) => {
 
 // Copied functions from Nback task stimuli.js
 
-export function statCalculation(trial, jsPsych) {
+export function statCalculation(trial, jsPsych, block, level) {
   let hit = jsPsych.data.get().filterCustom(function (trial) {
-    return (
-      (trial.block === "block_one" || trial.block === "block_two") &&
-      trial.result === "correct_match"
-    );
+    return trial.block === block && trial.level === level && trial.result === "correct_match";
   });
   let miss = jsPsych.data.get().filterCustom(function (trial) {
-    return (
-      (trial.block === "block_one" || trial.block === "block_two") &&
-      trial.result === "missed_match"
-    );
+    return trial.block === block && trial.level === level && trial.result === "missed_match";
   });
   let falseAlarm = jsPsych.data.get().filterCustom(function (trial) {
-    return (
-      (trial.block === "block_one" || trial.block === "block_two") &&
-      trial.result === "missed_mismatch"
-    );
+    return trial.block === block && trial.level === level && trial.result === "missed_mismatch";
   });
   let correctRejection = jsPsych.data.get().filterCustom(function (trial) {
-    return (
-      (trial.block === "block_one" || trial.block === "block_two") &&
-      trial.result === "correct_mismatch"
-    );
+    return trial.block === block && trial.level === level && trial.result === "correct_mismatch";
   });
 
   let phit;

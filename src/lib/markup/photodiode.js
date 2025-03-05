@@ -39,7 +39,7 @@ export function pdSpotEncode(taskCode) {
 
   /**
    * Pulses the photodiode spot from visible to white invisible and runs a callback function
-   * @param {number} ms The amount of time to flash the photodiode spot
+   * @param {number} msVisible The amount of time to flash the photodiode spot
    * @param {function} callback A callback function to execute after the flash
    */
   // TODO @brown-ccv #425: Prevent trial from changing until pdSpotEncode finishes (need to use jsPsych.pluginAPI.setTimeout) https://www.jspsych.org/7.0/reference/jspsych-pluginAPI/#jspsychpluginapiclearalltimeouts

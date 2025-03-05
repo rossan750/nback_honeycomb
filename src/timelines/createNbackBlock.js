@@ -4,9 +4,11 @@ import htmlKeyboardResponse from "@jspsych/plugin-html-keyboard-response";
 import language from "../config/language.json";
 import { eventCodes } from "../config/trigger";
 import { config } from "../config/main";
-
+import { alphabet_letters } from "./constants";
 import { photodiodeGhostBox, pdSpotEncode } from "../lib/markup/photodiode";
 import { buildFixationTrial } from "../trials/fixation";
+import { build_debrief_trial, betweenBlockRest, ready } from "../trials/nBackTrials";
+import instructionsPlugin from "@jspsych/plugin-instructions";
 
 function build_test_trial(jsPsych, taskConfig) {
   const { match_key, mismatch_key, letter_duration } = taskConfig.nback;
@@ -18,8 +20,8 @@ function build_test_trial(jsPsych, taskConfig) {
     },
     on_load: function () {
       // Conditionally flashes the photodiode when the trial first loads
-      //TODO: test does not exist, test_connect does instead
-      if (config.USE_PHOTODIODE) pdSpotEncode(eventCodes.test);
+      //TODO: we sure we want test_connect here?
+      if (config.USE_PHOTODIODE) pdSpotEncode(eventCodes.test_connect);
     },
     // choices: ["f", "j"],
     choices: [match_key, mismatch_key],
@@ -88,7 +90,12 @@ function build_feedback_trial(jsPsych, taskConfig) {
   };
 }
 
-export function createNbackBlock(jsPsych, taskConfig, level, block, stimuli) {
+export function createNbackBlock(jsPsych, taskConfig, level, block) {
+  const stimuli = jsPsych.randomization.sampleWithReplacement(
+    alphabet_letters,
+    taskConfig.nback.trialCount
+  );
+
   //Build the array of timeline variables.
   const timeline_variables = [];
   for (let i = 0; i < stimuli.length; i++) {
@@ -136,4 +143,52 @@ export function createNbackBlock(jsPsych, taskConfig, level, block, stimuli) {
     timeline_variables: timeline_variables,
     timeline: timeline,
   };
+}
+
+function addInstructionsTrial(n) {
+  let instruction;
+  if (n === 0) {
+    instruction = language.nback.instructions0back;
+  } else if (n === 1) {
+    instruction = language.nback.instructions1back;
+  } else if (n === 2) {
+    instruction = language.nback.instructions2back;
+  }
+
+  // trial for displaying the instructions
+  const instructions = {
+    type: instructionsPlugin,
+    pages: [
+      `<p>${instruction.letter}</p><p>${instruction.yourTask1}</p><p>${instruction.yourTask2}</p><p>${language.nback.generalInstruction.fastAndAccurate}</p><p>${language.nback.generalInstruction.clickNext}</p>`,
+    ],
+    show_clickable_nav: true,
+    button_label_next: language.nback.button.next,
+    button_label_previous: language.nback.button.previous,
+  };
+
+  return instructions;
+}
+
+export function createAllNbackBlocks(jsPsych, taskConfig) {
+  let allNbackBlocks = [];
+  //iterate through each n-back type
+  for (let n = 0; n < taskConfig.nback.nbackTrials.length; n++) {
+    // create i nums of blocks for this n-back
+    if (taskConfig.nback.nbackTrials[n] > 0) {
+      //add instructions first, if and only if there are trials for this n-back type
+      allNbackBlocks.push(addInstructionsTrial(n));
+    }
+    for (let i = 0; i < taskConfig.nback.nbackTrials[n]; i++) {
+      //experiment block
+      allNbackBlocks.push(createNbackBlock(jsPsych, taskConfig, n, i));
+      //accuracy report for block
+      const debriefTrial = build_debrief_trial(jsPsych, n, i);
+      allNbackBlocks.push(debriefTrial);
+      //in between block text
+      if (i < taskConfig.nback.nbackTrials[n] - 1) {
+        allNbackBlocks.push(betweenBlockRest, ready);
+      }
+    }
+  }
+  return allNbackBlocks;
 }

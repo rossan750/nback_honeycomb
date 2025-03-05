@@ -2,7 +2,6 @@ import htmlKeyboardResponse from "@jspsych/plugin-html-keyboard-response";
 import { config } from "../config/main";
 import { eventCodes } from "../config/trigger";
 import { pdSpotEncode, photodiodeGhostBox } from "../lib/markup/photodiode";
-import { fixationHTML } from "../lib/markup/fixation";
 /**
  * Builds a trial with a fixation dot and optional photodiode box.
  * @param {jsPsych} jsPsych The global jsPsych object used to build the trial
@@ -17,7 +16,7 @@ export function buildFixationTrial(jsPsych, taskConfig) {
     type: htmlKeyboardResponse,
     choices: "NO_KEYS",
     // Display the fixation dot
-    stimulus: fixationHTML,
+    stimulus: "",
     prompt: function () {
       // Conditionally display the photodiodeGhostBox
       if (config.USE_PHOTODIODE) return photodiodeGhostBox;
