@@ -21,7 +21,7 @@ export const afterPractice = {
   stimulus: `<h2>${language.practice.end}</h2><p>${language.task.start}</p><p>${language.task.press}<p>`,
 };
 
-export function build_debrief_trial(jsPsych, block, level) {
+export function build_debrief_trial(jsPsych, block, level, totalTrialCount) {
   const debriefBlock = {
     type: htmlKeyboardResponse,
     choices: "NO_KEYS",
@@ -42,7 +42,7 @@ export function build_debrief_trial(jsPsych, block, level) {
     },
     trial_duration: 3000,
     on_finish: function (trial) {
-      statCalculation(trial, jsPsych, block, level);
+      statCalculation(trial, jsPsych, block, level, totalTrialCount);
     },
   };
   return debriefBlock;

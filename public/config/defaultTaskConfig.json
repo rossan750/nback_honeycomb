@@ -8,11 +8,11 @@
   "nback": {
     "match_key": "5",
     "mismatch_key": "0",
-    "letter_size": 120,
+    "letter_size": 240,
     "letter_duration": 3000,
     "feedback_duration": 1000,
-    "nbackTrials": [2,2,0],
-    "practiceCount": 1,
-    "trialCount": 10
+    "nbackTrials": [1,0,0],
+    "trialCount": 40,
+    "targetCount": 10
   }
 }

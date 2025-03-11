@@ -15,7 +15,7 @@ export const generateStartingOpts = (blockSettings) => {
 
 // Copied functions from Nback task stimuli.js
 
-export function statCalculation(trial, jsPsych, block, level) {
+export function statCalculation(trial, jsPsych, block, level, totalTrialCount) {
   let hit = jsPsych.data.get().filterCustom(function (trial) {
     return trial.block === block && trial.level === level && trial.result === "correct_match";
   });
@@ -31,16 +31,17 @@ export function statCalculation(trial, jsPsych, block, level) {
 
   let phit;
   let pfa;
+
   if (miss.count() > 0) {
-    phit = hit.count() / (miss.count() + hit.count());
+    phit = hit.count() / totalTrialCount;
   } else {
-    phit = hit.count() - 0.5 / (miss.count() + hit.count());
+    phit = (hit.count() - 0.5) / totalTrialCount;
   }
 
   if (falseAlarm.count() > 0) {
-    pfa = falseAlarm.count() / (falseAlarm.count() + correctRejection.count());
+    pfa = falseAlarm.count() / totalTrialCount;
   } else {
-    pfa = 0.5 / (falseAlarm.count() + correctRejection.count());
+    pfa = 0.5 / totalTrialCount;
   }
 
   let normHit = NormSInv(phit);

@@ -4,11 +4,11 @@ import htmlKeyboardResponse from "@jspsych/plugin-html-keyboard-response";
 import language from "../config/language.json";
 import { eventCodes } from "../config/trigger";
 import { config } from "../config/main";
-import { alphabet_letters } from "./constants";
 import { photodiodeGhostBox, pdSpotEncode } from "../lib/markup/photodiode";
 import { buildFixationTrial } from "../trials/fixation";
 import { build_debrief_trial, betweenBlockRest, ready } from "../trials/nBackTrials";
 import instructionsPlugin from "@jspsych/plugin-instructions";
+import { generateNBackStimuli } from "./generateNBackList";
 
 function build_test_trial(jsPsych, taskConfig) {
   const { match_key, mismatch_key, letter_duration } = taskConfig.nback;
@@ -90,12 +90,7 @@ function build_feedback_trial(jsPsych, taskConfig) {
   };
 }
 
-export function createNbackBlock(jsPsych, taskConfig, level, block) {
-  const stimuli = jsPsych.randomization.sampleWithReplacement(
-    alphabet_letters,
-    taskConfig.nback.trialCount
-  );
-
+export function createNbackBlock(jsPsych, taskConfig, stimuli, level, block) {
   //Build the array of timeline variables.
   const timeline_variables = [];
   for (let i = 0; i < stimuli.length; i++) {
@@ -179,10 +174,17 @@ export function createAllNbackBlocks(jsPsych, taskConfig) {
       allNbackBlocks.push(addInstructionsTrial(n));
     }
     for (let i = 0; i < taskConfig.nback.nbackTrials[n]; i++) {
+      const result = generateNBackStimuli(
+        taskConfig.nback.trialCount,
+        taskConfig.nback.targetCount,
+        n
+      );
+      const stimuli = result.list.map((item) => item[0]);
+
       //experiment block
-      allNbackBlocks.push(createNbackBlock(jsPsych, taskConfig, n, i));
+      allNbackBlocks.push(createNbackBlock(jsPsych, taskConfig, stimuli, n, i));
       //accuracy report for block
-      const debriefTrial = build_debrief_trial(jsPsych, n, i);
+      const debriefTrial = build_debrief_trial(jsPsych, n, i, taskConfig.nback.trialCount);
       allNbackBlocks.push(debriefTrial);
       //in between block text
       if (i < taskConfig.nback.nbackTrials[n] - 1) {
