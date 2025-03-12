@@ -8,7 +8,7 @@ import { photodiodeGhostBox, pdSpotEncode } from "../lib/markup/photodiode";
 import { buildFixationTrial } from "../trials/fixation";
 import { build_debrief_trial, betweenBlockRest, ready } from "../trials/nBackTrials";
 import instructionsPlugin from "@jspsych/plugin-instructions";
-import { generateNBackStimuli } from "./generateNBackList";
+import { generateNBackStimuli } from "../lib/generateNBackList";
 
 function build_test_trial(jsPsych, taskConfig) {
   const { match_key, mismatch_key, letter_duration } = taskConfig.nback;
@@ -179,6 +179,8 @@ export function createAllNbackBlocks(jsPsych, taskConfig) {
         taskConfig.nback.targetCount,
         n
       );
+      console.log(result.list);
+
       const stimuli = result.list.map((item) => item[0]);
 
       //experiment block
