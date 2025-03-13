@@ -11,8 +11,8 @@
     "letter_size": 240,
     "letter_duration": 3000,
     "feedback_duration": 1000,
-    "nbackTrials": [0,1,0],
-    "trialCount": 40,
+    "nbackTrials": [1,1,1],
+    "trialCount": 50,
     "targetCount": 10
   }
 }

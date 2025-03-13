@@ -167,13 +167,15 @@ function addInstructionsTrial(n) {
 export function createAllNbackBlocks(jsPsych, taskConfig) {
   let allNbackBlocks = [];
   //iterate through each n-back type
-  for (let n = 0; n < taskConfig.nback.nbackTrials.length; n++) {
+  const trialConfig = taskConfig.trialConfig;
+
+  for (let n = 0; n < trialConfig.length; n++) {
     // create i nums of blocks for this n-back
-    if (taskConfig.nback.nbackTrials[n] > 0) {
+    if (trialConfig[n] > 0) {
       //add instructions first, if and only if there are trials for this n-back type
       allNbackBlocks.push(addInstructionsTrial(n));
     }
-    for (let i = 0; i < taskConfig.nback.nbackTrials[n]; i++) {
+    for (let i = 0; i < trialConfig[n]; i++) {
       const result = generateNBackStimuli(
         taskConfig.nback.trialCount,
         taskConfig.nback.targetCount,
@@ -189,7 +191,7 @@ export function createAllNbackBlocks(jsPsych, taskConfig) {
       const debriefTrial = build_debrief_trial(jsPsych, n, i, taskConfig.nback.trialCount);
       allNbackBlocks.push(debriefTrial);
       //in between block text
-      if (i < taskConfig.nback.nbackTrials[n] - 1) {
+      if (i < trialConfig[n] - 1) {
         allNbackBlocks.push(betweenBlockRest, ready);
       }
     }

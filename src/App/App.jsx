@@ -41,6 +41,7 @@ export default function App() {
   // Manage the data used in the experiment
   const [participantID, setParticipantID] = React.useState("");
   const [studyID, setStudyID] = React.useState("");
+  const [trialConfig, setTrialConfig] = React.useState("");
 
   // Manage the method type being used ("desktop", "firebase", "mturk", or "default")
   const [currentMethod, setMethod] = React.useState("default");
@@ -157,9 +158,10 @@ export default function App() {
    *
    * The study and participant IDs are updated and loggedIn is set to true.
    */
-  const handleLogin = React.useCallback((studyId, participantId) => {
+  const handleLogin = React.useCallback((studyId, participantId, trialConfig) => {
     setStudyID(studyId);
     setParticipantID(participantId);
+    setTrialConfig(trialConfig);
     setLoggedIn(true);
   }, []);
 
@@ -171,6 +173,7 @@ export default function App() {
         <JsPsychExperiment
           studyID={studyID}
           participantID={participantID}
+          trialConfig={trialConfig}
           taskVersion={taskVersion}
           dataUpdateFunction={
             {
@@ -195,6 +198,7 @@ export default function App() {
         <Login
           initialStudyID={studyID}
           initialParticipantID={participantID}
+          initialTrialConfig={trialConfig}
           validationFunction={
             {
               desktop: defaultValidation,
