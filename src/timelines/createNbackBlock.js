@@ -21,7 +21,7 @@ function build_test_trial(jsPsych, taskConfig) {
     on_load: function () {
       // Conditionally flashes the photodiode when the trial first loads
       //TODO: we sure we want test_connect here?
-      if (config.USE_PHOTODIODE) pdSpotEncode(eventCodes.test_connect);
+      if (config.USE_PHOTODIODE) pdSpotEncode(eventCodes.fixation);
     },
     // choices: ["f", "j"],
     choices: [match_key, mismatch_key],
