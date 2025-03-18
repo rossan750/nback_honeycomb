@@ -90,19 +90,19 @@ function build_feedback_trial(jsPsych, taskConfig) {
   };
 }
 
-export function createNbackBlock(jsPsych, taskConfig, stimuli, level, block) {
+export function createNbackBlock(jsPsych, taskConfig, stimuli, block, level) {
   //Build the array of timeline variables.
   const timeline_variables = [];
   for (let i = 0; i < stimuli.length; i++) {
     const letter = stimuli[i];
 
     let targetLetter;
-    if (level === 0) {
+    if (block === 0) {
       // target stimulus is always X in level 0
       targetLetter = "X";
     } else {
       // target stimulus is 1 or 2 back based on level
-      targetLetter = stimuli[i - level];
+      targetLetter = stimuli[i - block];
     }
 
     const targetMatch = letter === targetLetter;
@@ -181,7 +181,6 @@ export function createAllNbackBlocks(jsPsych, taskConfig) {
         taskConfig.nback.targetCount,
         n
       );
-      console.log(result.list);
 
       const stimuli = result.list.map((item) => item[0]);
 

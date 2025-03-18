@@ -32,27 +32,14 @@ export function statCalculation(trial, jsPsych, block, level, totalTrialCount) {
   let phit;
   let pfa;
 
-  if (miss.count() > 0) {
-    phit = hit.count() / totalTrialCount;
-  } else {
-    phit = (hit.count() - 0.5) / totalTrialCount;
-  }
-
-  if (falseAlarm.count() > 0) {
-    pfa = falseAlarm.count() / totalTrialCount;
-  } else {
-    pfa = 0.5 / totalTrialCount;
-  }
+  phit = hit.count() / totalTrialCount;
+  pfa = falseAlarm.count() / totalTrialCount;
 
   let normHit = NormSInv(phit);
   let normFa = NormSInv(pfa);
 
   let trials = jsPsych.data.get().filterCustom(function (trial) {
-    return (
-      (trial.block === "block_one" || trial.block === "block_two") &&
-      trial.test_part === "test" &&
-      trial.key_press !== null
-    );
+    return trial.block === block && trial.test_part === "test" && trial.key_press !== null;
   }); //beleszámoljuk-e a hiányzó választ?????
   // let correctTrials = jsPsych.data.get().filterCustom(function (trial) {
   //   return trial.hit === 1 || trial.correct_rejection === 1;
@@ -67,11 +54,7 @@ export function statCalculation(trial, jsPsych, block, level, totalTrialCount) {
   trial.STAT_nr_no_response = jsPsych.data
     .get()
     .filterCustom(function (trial) {
-      return (
-        (trial.block === "block_one" || trial.block === "block_two") &&
-        trial.test_part === "test" &&
-        trial.key_press == null
-      );
+      return trial.block === block && trial.test_part === "test" && trial.key_press == null;
     })
     .count();
   trial.STAT_accuracy = ((hit.count() + correctRejection.count()) / trials.count()) * 100;
