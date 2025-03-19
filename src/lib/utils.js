@@ -89,31 +89,6 @@ function startKeypressListener(jsPsych) {
 }
 
 /**
- * Gets the value of a given variable from the URL search parameters
- * @param {any} variable The key of the variable in the search parameters
- * @returns The value of variable in the search parameters
- */
-function getQueryVariable(variable) {
-  const query = window.location.search.substring(1);
-  const vars = query.split("&");
-  for (let i = 0; i < vars.length; i++) {
-    const pair = vars[i].split("=");
-    if (decodeURIComponent(pair[0]) === variable) {
-      return decodeURIComponent(pair[1]);
-    }
-  }
-}
-
-/**
- * Gets the ID of a prolific user from the URL search parameters
- * @returns
- */
-function getProlificId() {
-  const prolificId = getQueryVariable("PROLIFIC_PID");
-  return prolificId;
-}
-
-/**
  * Emits an audible beep
  * @param {Object} audioCodes The type/frequency of the beep
  */
@@ -193,6 +168,25 @@ function NormSInv(p) {
   return retVal;
 }
 
+/**
+ * Gets the value of a given variable from the URL search parameters
+ * @param {string} queryParameter The key of the variable in the search parameters
+ * @returns {string} The value of variable in the search parameters
+ */
+function getSearchParam(queryParameter) {
+  const params = new URLSearchParams(window.location.search);
+  return params.get(queryParameter);
+}
+
+/**
+ * Gets the ID of a prolific user from the URL search parameters
+ * @returns
+ */
+function getProlificId() {
+  const prolificId = getSearchParam("PROLIFIC_PID");
+  return prolificId;
+}
+
 export {
   beep,
   deepCopy,
@@ -206,4 +200,5 @@ export {
   randomTrue,
   sleep,
   startKeypressListener,
+  getSearchParam,
 };

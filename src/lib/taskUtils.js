@@ -15,55 +15,31 @@ export const generateStartingOpts = (blockSettings) => {
 
 // Copied functions from Nback task stimuli.js
 
-export function statCalculation(trial, jsPsych) {
+export function statCalculation(trial, jsPsych, block, level, totalTrialCount) {
   let hit = jsPsych.data.get().filterCustom(function (trial) {
-    return (
-      (trial.block === "block_one" || trial.block === "block_two") &&
-      trial.result === "correct_match"
-    );
+    return trial.block === block && trial.level === level && trial.result === "correct_match";
   });
   let miss = jsPsych.data.get().filterCustom(function (trial) {
-    return (
-      (trial.block === "block_one" || trial.block === "block_two") &&
-      trial.result === "missed_match"
-    );
+    return trial.block === block && trial.level === level && trial.result === "missed_match";
   });
   let falseAlarm = jsPsych.data.get().filterCustom(function (trial) {
-    return (
-      (trial.block === "block_one" || trial.block === "block_two") &&
-      trial.result === "missed_mismatch"
-    );
+    return trial.block === block && trial.level === level && trial.result === "missed_mismatch";
   });
   let correctRejection = jsPsych.data.get().filterCustom(function (trial) {
-    return (
-      (trial.block === "block_one" || trial.block === "block_two") &&
-      trial.result === "correct_mismatch"
-    );
+    return trial.block === block && trial.level === level && trial.result === "correct_mismatch";
   });
 
   let phit;
   let pfa;
-  if (miss.count() > 0) {
-    phit = hit.count() / (miss.count() + hit.count());
-  } else {
-    phit = hit.count() - 0.5 / (miss.count() + hit.count());
-  }
 
-  if (falseAlarm.count() > 0) {
-    pfa = falseAlarm.count() / (falseAlarm.count() + correctRejection.count());
-  } else {
-    pfa = 0.5 / (falseAlarm.count() + correctRejection.count());
-  }
+  phit = hit.count() / totalTrialCount;
+  pfa = falseAlarm.count() / totalTrialCount;
 
   let normHit = NormSInv(phit);
   let normFa = NormSInv(pfa);
 
   let trials = jsPsych.data.get().filterCustom(function (trial) {
-    return (
-      (trial.block === "block_one" || trial.block === "block_two") &&
-      trial.test_part === "test" &&
-      trial.key_press !== null
-    );
+    return trial.block === block && trial.test_part === "test" && trial.key_press !== null;
   }); //beleszámoljuk-e a hiányzó választ?????
   // let correctTrials = jsPsych.data.get().filterCustom(function (trial) {
   //   return trial.hit === 1 || trial.correct_rejection === 1;
@@ -78,11 +54,7 @@ export function statCalculation(trial, jsPsych) {
   trial.STAT_nr_no_response = jsPsych.data
     .get()
     .filterCustom(function (trial) {
-      return (
-        (trial.block === "block_one" || trial.block === "block_two") &&
-        trial.test_part === "test" &&
-        trial.key_press == null
-      );
+      return trial.block === block && trial.test_part === "test" && trial.key_press == null;
     })
     .count();
   trial.STAT_accuracy = ((hit.count() + correctRejection.count()) / trials.count()) * 100;
