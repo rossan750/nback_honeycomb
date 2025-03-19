@@ -9,6 +9,7 @@ import { initParticipant } from "../deployments/firebase";
 export default function JsPsychExperiment({
   studyID,
   participantID,
+  trialConfig,
   taskVersion,
   dataUpdateFunction,
   dataFinishFunction,
@@ -50,7 +51,15 @@ export default function JsPsychExperiment({
       });
 
       const taskConfigInternal = await window.electronAPI.syncConfig(studyID, participantID);
-      setTaskConfig(taskConfigInternal);
+
+      //If taskConfig not properly set up during login, default to defaultTaskConfig.json nback trials configuration
+      const trialConfiguration =
+        trialConfig.length > 0 ? trialConfig.split(",") : taskConfigInternal.nback.nbackTrials;
+
+      setTaskConfig({
+        ...taskConfigInternal,
+        trialConfig: trialConfiguration,
+      });
 
       // For testing and debugging purposes
       console.log({ "Task Configuration": taskConfigInternal });
