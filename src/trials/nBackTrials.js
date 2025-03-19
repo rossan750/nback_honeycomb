@@ -1,4 +1,5 @@
-import { language as lang } from "../config/main";
+import lang from "../config/language.json";
+
 import htmlKeyboardResponse from "@jspsych/plugin-html-keyboard-response";
 import { statCalculation } from "../lib/taskUtils";
 const language = lang.nback;
@@ -20,15 +21,13 @@ export const afterPractice = {
   stimulus: `<h2>${language.practice.end}</h2><p>${language.task.start}</p><p>${language.task.press}<p>`,
 };
 
-export function build_debrief_trial(jsPsych) {
+export function build_debrief_trial(jsPsych, block, level, totalTrialCount) {
   const debriefBlock = {
     type: htmlKeyboardResponse,
     choices: "NO_KEYS",
     stimulus: function () {
       let trials = jsPsych.data.get().filterCustom(function (trial) {
-        return (
-          (trial.block === "block_one" || trial.block === "block_two") && trial.test_part === "test"
-        );
+        return trial.block === block && trial.level === level && trial.test_part === "test";
       });
       let correct_trials = trials.filterCustom(function (trial) {
         return trial.correct_response;
@@ -37,14 +36,13 @@ export function build_debrief_trial(jsPsych) {
       let rt = Math.round(correct_trials.select("rt").mean());
 
       return `
-    <h2>${language.end.end}</h2>
-    <p>${language.feedback.accuracy}${accuracy}${language.feedback.accuracy2}</p>
-    <p>${language.feedback.rt}${rt}${language.feedback.rt2}</p>
-    <p>${language.end.thankYou}</p>`;
+        <p>${language.feedback.accuracy}${accuracy}${language.feedback.accuracy2}</p>
+        ${!isNaN(rt) ? `<p>${language.feedback.rt}${rt}${language.feedback.rt2}</p>` : ""}
+      `;
     },
     trial_duration: 3000,
     on_finish: function (trial) {
-      statCalculation(trial, jsPsych);
+      statCalculation(trial, jsPsych, block, level, totalTrialCount);
     },
   };
   return debriefBlock;

@@ -5,11 +5,13 @@ export default function Login({
   handleLogin,
   initialParticipantID,
   initialStudyID,
+  initialTrialConfig,
   validationFunction,
 }) {
   // State variables for login screen
   const [participantId, setParticipant] = React.useState(initialParticipantID);
   const [studyId, setStudy] = React.useState(initialStudyID);
+  const [trialConfig, setTrialConfig] = React.useState(initialTrialConfig);
   const [isError, setIsError] = React.useState(false);
 
   // Function used to validate and log in participant
@@ -18,7 +20,7 @@ export default function Login({
     // Logs user in if a valid participant/study id combination is given
     validationFunction(studyId, participantId).then((isValid) => {
       setIsError(!isValid);
-      if (isValid) handleLogin(studyId, participantId);
+      if (isValid) handleLogin(studyId, participantId, trialConfig);
     });
   }
 
@@ -41,6 +43,14 @@ export default function Login({
               type="studyId"
               value={studyId}
               onChange={(e) => setStudy(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group className="width-100" size="lg" controlId="studyId">
+            <Form.Label>Trial Config</Form.Label>
+            <Form.Control
+              type="trialConfig"
+              value={trialConfig}
+              onChange={(e) => setTrialConfig(e.target.value)}
             />
           </Form.Group>
           <Button
