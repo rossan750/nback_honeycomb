@@ -36,8 +36,8 @@ export function build_debrief_trial(jsPsych, block, level, totalTrialCount) {
       let rt = Math.round(correct_trials.select("rt").mean());
 
       return `
-      <p>${language.feedback.accuracy}${accuracy}${language.feedback.accuracy2}</p>
-      <p>${language.feedback.rt}${rt}${language.feedback.rt2}</p>
+        <p>${language.feedback.accuracy}${accuracy}${language.feedback.accuracy2}</p>
+        ${!isNaN(rt) ? `<p>${language.feedback.rt}${rt}${language.feedback.rt2}</p>` : ""}
       `;
     },
     trial_duration: 3000,
