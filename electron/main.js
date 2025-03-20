@@ -423,41 +423,45 @@ function handleEventSend(code) {
   } else {
     log.error(`Trigger port is undefined - Event Marker is not connected`);
 
-    // Display error menu
-    const response = dialog.showMessageBoxSync(null, {
-      type: "error",
-      message: "Event Marker is not connected",
-      title: "USB Error",
-      buttons: [
-        "Quit",
-        "Retry",
-        // Allow continuation when running in development mode
-        ...(ELECTRON_START_URL ? ["Continue Anyway"] : []),
-      ],
-      detail: "heres some detail",
+    // set-up mockbinding and open port for communication if continue anyway is clicked
+    MockBinding.createPort("/dev/ROBOT", {
+      echo: true,
+      record: true,
+    });
+    TRIGGER_PORT = new SerialPortStream({
+      binding: MockBinding,
+      path: "/dev/ROBOT",
+      baudRate: 14400,
     });
 
-    switch (response) {
-      case 0:
-        // User selects "Quit"
-        app.exit();
-        break;
-      case 1:
-        // User selects "Retry" so we reset the port and try again
-        setUpPort().then(() => handleEventSend(code));
-        break;
-      case 2:
-        // set-up mockbinding and open port for communication if continue anyway is clicked
-        MockBinding.createPort("/dev/ROBOT", {
-          echo: true,
-          record: true,
-        });
-        TRIGGER_PORT = new SerialPortStream({
-          binding: MockBinding,
-          path: "/dev/ROBOT",
-          baudRate: 14400,
-        });
-        break;
-    }
+    // TODO: temporary fix to allow experiment to run without photodiode. Revert when necessary.
+    // Display error menu
+    // const response = dialog.showMessageBoxSync(null, {
+    //   type: "error",
+    //   message: "Event Marker is not connected",
+    //   title: "USB Error",
+    //   buttons: [
+    //     "Quit",
+    //     "Retry",
+    //     // Allow continuation when running in development mode
+    //     ...(ELECTRON_START_URL ? ["Continue Anyway"] : []),
+    //   ],
+    //   detail: "heres some detail",
+    // });
+
+    // switch (response) {
+    //   case 0:
+    //     // set-up mockbinding and open port for communication if continue anyway is clicked
+    //     MockBinding.createPort("/dev/ROBOT", {
+    //       echo: true,
+    //       record: true,
+    //     });
+    //     TRIGGER_PORT = new SerialPortStream({
+    //       binding: MockBinding,
+    //       path: "/dev/ROBOT",
+    //       baudRate: 14400,
+    //     });
+    //     break;
+    // }
   }
 }
