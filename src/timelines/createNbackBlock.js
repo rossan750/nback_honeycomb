@@ -19,6 +19,7 @@ function build_test_trial(jsPsych, taskConfig) {
       return div(jsPsych.timelineVariable("stimulus") + photodiodeGhostBox);
     },
     on_load: function () {
+      this.start_time = performance.now();
       // Conditionally flashes the photodiode when the trial first loads
       //TODO: we sure we want test_connect here?
       if (config.USE_PHOTODIODE) pdSpotEncode(eventCodes.fixation);
@@ -29,6 +30,9 @@ function build_test_trial(jsPsych, taskConfig) {
     trial_duration: letter_duration,
     stimulus_duration: letter_duration,
     on_finish: function (data) {
+      this.end_time = performance.now();
+      data.response_time = this.end_time - this.start_time;
+
       // FOR PRACTICE TRIAL...
       // Press "5" on the numeric keypad if you see "X" and "0" on the numeric keypad if you see anything else.
       if (data.response === null) data.result = "no_response";
