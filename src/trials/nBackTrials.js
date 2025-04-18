@@ -24,7 +24,7 @@ export const afterPractice = {
 export function build_debrief_trial(jsPsych, block, level, totalTrialCount) {
   const debriefBlock = {
     type: htmlKeyboardResponse,
-    choices: "NO_KEYS",
+    choices: "ALL_KEYS",
     stimulus: function () {
       let trials = jsPsych.data.get().filterCustom(function (trial) {
         return trial.block === block && trial.level === level && trial.test_part === "test";
@@ -38,9 +38,9 @@ export function build_debrief_trial(jsPsych, block, level, totalTrialCount) {
       return `
         <p>${language.feedback.accuracy}${accuracy}${language.feedback.accuracy2}</p>
         ${!isNaN(rt) ? `<p>${language.feedback.rt}${rt}${language.feedback.rt2}</p>` : ""}
+        <p>Press any key to continue.</p>
       `;
     },
-    trial_duration: 3000,
     on_finish: function (trial) {
       statCalculation(trial, jsPsych, block, level, totalTrialCount);
     },
