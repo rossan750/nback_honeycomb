@@ -1,5 +1,6 @@
 p {
-    font-size: 1.25em;
+    font-size: 3.0em;
+    line-height: 75px;
 }
 
 img {
@@ -30,6 +31,6 @@ body {
     transform: translate(-50%, -50%);
 }
 
-.warning{
+.warning {
     margin-top: 10%;
 }
